@@ -273,11 +273,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
   position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center;
   animation: heroFadeUp 1.2s 1s ease both;
-}
-.hero-scroll-hint span {
-  width: 1px; height: 60px;
-  background: linear-gradient(to bottom, var(--olive), transparent);
-  animation: scrollPulse 2s infinite;
+
 }
 @keyframes scrollPulse {
   0%,100% { opacity: 0.4; transform: scaleY(1); }
