@@ -1,0 +1,123 @@
+{
+  "marca": {
+    "nombre": "MELEK NAKIŞ",
+    "eslogan": "Tejido a mano. Hecho para el alma libre.",
+    "whatsapp": "573502997986",
+    "instagram": "https://instagram.com/meleknakish",
+    "tiktok": "https://tiktok.com/@melek.col"
+  },
+  "productos": [
+    {
+      "id": "top-001",
+      "categoria": "tops",
+      "nombre": "Top Brisa",
+      "precio": 60000,
+      "descripcion": "Top tejido a crochet en puntos cerrados, perfecto para la playa o una tarde de sol. Cada pieza es única, hecha a mano con hilos importados.",
+      "stock": true,
+      "fotos": [
+        
+        "https://i.postimg.cc/K8CRC4t7/719612808-1516620286865288-3579648718645906182-n.jpg"
+      ],
+      "fotosPorColor": {
+        "Coco": ["https://i.postimg.cc/j5pc5sV3/coco-top.jpg"],
+        "Sand": ["https://i.postimg.cc/Twz0wR8k/sand-top.jpg"],
+        "Green": ["https://i.postimg.cc/Vk2d25Xq/green.jpg"]
+      },
+      "variantes": {
+        "Coco":  { "XS": true,  "S": true,  "M": true,  "L": false },
+        "Sand":    { "XS": true,  "S": true, "M": true,  "L": true  },
+        "Green":    { "XS": true, "S": true,  "M": true,  "L": true  }
+
+      }
+    },
+    {
+      "id": "top-002",
+      "categoria": "tops",
+      "nombre": "Top Aura",
+      "precio": 100000,
+      "descripcion": "Top asimétrico con flecos en los bordes. Tejido en punto cerrado con hilo importado de alta calidad.",
+      "stock": true,
+      "entregaInmediata": false,
+      "fotos": [
+        "https://i.postimg.cc/PrZrHzCN/60D13E83-7F67-4B9B-BA75-7F7306700E33.jpg"
+      ],
+    
+      "fotosPorColor": {
+        "Gold": ["https://i.postimg.cc/15MwGQKB/dorado.jpg"],
+        "Black": ["https://i.postimg.cc/28ThQDx0/negro.jpg"],
+        "Whithe": ["https://i.postimg.cc/qMQysTGj/blanco.jpg"],
+        "Green": ["https://i.postimg.cc/x1CHg4sH/verde.jpg"]
+      },
+      "variantes": {
+        "Gold":  { "XS": true,  "S": true,  "M": true,  "L": false },
+        "Black":    { "XS": true,  "S": true, "M": true,  "L": true  },
+        "Whithe":    { "XS": true, "S": true,  "M": true,  "L": true  },
+        "Green":    { "XS": true, "S": true,  "M": true,  "L": false  }
+      }
+    },
+    {
+      "id": "bikini-001",
+      "categoria": "bikinis",
+      "nombre": "Bikini Marea",
+      "precio": 120000,
+      "descripcion": "Conjunto de bikini tejido a crochet, top triángulo + panty brasilero. Hilo importado resistente al agua, piscina y al sol. Duradero y elegante.",
+      "stock": true,
+      "entregaInmediata": true,
+      "fotos": [
+        "https://i.postimg.cc/HxqzxpGZ/bikini.jpg"
+      ],
+      "fotosPorColor": {
+        "coco": ["https://i.postimg.cc/HxqzxpGZ/bikini.jpg"]
+      },
+      "variantes": {
+        "coco":      { "XS": true,  "S": true,  "M": true,  "L": true }
+      }
+    },
+    
+    {
+      "id": "bolso-001",
+      "categoria": "bolsos",
+      "nombre": "Bolso Boho",
+      "precio": 60000,
+      "descripcion": "Bolso tejido a crochet con asa corta. Mediano, ideal para la playa o el día a día. Broche interno.",
+      "stock": true,
+      "entregaInmediata": true,
+      "fotos": [
+        "https://i.postimg.cc/65kKXZ1j/721801001-1747141376276433-3745323484262872268-n.jpg"
+      ],
+      "fotosPorColor": {
+        "Blue": ["https://i.postimg.cc/B6rp6qWM/bolso.jpg"],
+        "Green": ["https://i.postimg.cc/dtbFYCSW/723330728-976007725287864-7642049206456931610-n.jpg"]
+      },
+      "variantes": {
+        "Blue": { "Único": true  },
+        "Green":   { "Único": true  }
+      }
+    },
+   
+    {
+      "id": "acc-001",
+      "categoria": "accesorios",
+      "nombre": "Hat Summer",
+      "precio": 45000,
+      "descripcion": "Gorro tejido a crochet. Perfecta para complementar cualquier look.",
+      "stock": true,
+      "entregaInmediata": true,
+      "fotos": [
+        "https://i.postimg.cc/d0Xp2cPy/hay.jpg"
+      ],
+      "fotosPorColor": {
+        "Sand": ["https://i.postimg.cc/SNhPmGfV/722993427-921463577621550-8049830527041629302-n.jpg"],
+        "Green": ["https://i.postimg.cc/TPSFVvMb/723599269-1345778017651027-4909415122791203040-n.jpg"],
+        "Gold": ["https://i.postimg.cc/9Xp3kSGc/724458842-1494558278490848-7215065731571639641-n.jpg"]
+      },
+      "variantes": {
+        "Sand": { "Único": true  },
+        "Green":   { "Único": true  },
+        "Gold":   { "Único": false }
+      }
+    }
+    
+    
+  ]
+}

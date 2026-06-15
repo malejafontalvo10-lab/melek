@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MELEK NAKIŞ — Tejidos a Mano</title>
+  <meta name="description" content="Tops, bikinis, bolsos y accesorios tejidos a crochet a mano. Hilos importados de alta calidad." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Fraunces:opsz,wght@9..144,300;9..144,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- OVERLAY -->
+<div id="overlay" class="overlay"></div>
+
+<!-- ── SIDE NAV ── -->
+<nav id="sideNav" class="side-nav">
+  <button id="closeNav" class="close-nav" aria-label="Cerrar menú">✕</button>
+  <div class="side-nav-logo">MELEK NAKIŞ</div>
+  <ul class="side-nav-list">
+
+    <li>
+      <a href="#" class="nav-link" data-page="inicio">Inicio</a>
+    </li>
+
+    <!-- CATÁLOGO con submenu -->
+    <li class="nav-has-sub">
+      <button class="nav-category" id="navCatToggle">
+        Catálogo <span class="nav-arrow">›</span>
+      </button>
+      <ul class="nav-sub" id="sub-catalogo">
+        <li><a href="#" class="nav-sub-link nav-link" data-page="catalogo" data-filter="todos">Ver todo</a></li>
+        <li><a href="#" class="nav-sub-link nav-link" data-page="catalogo" data-filter="tops">Tops</a></li>
+        <li><a href="#" class="nav-sub-link nav-link" data-page="catalogo" data-filter="bikinis">Bikinis</a></li>
+        <li><a href="#" class="nav-sub-link nav-link" data-page="catalogo" data-filter="bolsos">Bolsos</a></li>
+        <li><a href="#" class="nav-sub-link nav-link" data-page="catalogo" data-filter="accesorios">Accesorios</a></li>
+      </ul>
+    </li>
+
+    <li><a href="#" class="nav-link" data-page="nosotros">Nosotros</a></li>
+    <li><a href="#" class="nav-link" data-page="envios">Envíos y pagos</a></li>
+    <li><a href="#" class="nav-link" data-page="guia-tallas">Guía de tallas</a></li>
+    <li><a href="#" class="nav-link" data-page="garantias">Garantías</a></li>
+    <li><a href="#" class="nav-link" data-page="contacto">Contáctanos</a></li>
+
+  </ul>
+  <div class="nav-socials">
+    <a href="#" id="nav-ig" target="_blank" class="social-icon" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+    </a>
+    <a href="#" id="nav-tt" target="_blank" class="social-icon" aria-label="TikTok">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg>
+    </a>
+    <a href="#" id="nav-wa" target="_blank" class="social-icon" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- ── TOP HEADER ── -->
+<header class="top-header">
+  <button id="menuBtn" class="menu-btn" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+  <button class="header-logo" data-page="inicio" aria-label="Ir al inicio">MELEK NAKIŞ</button>
+  <button id="cartBtn" class="cart-btn" aria-label="Ver carrito">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    <span id="cartCount" class="cart-count">0</span>
+  </button>
+</header>
+
+<!-- ══════════════════════════════════
+     PÁGINAS  una visible a la vez
+══════════════════════════════════ -->
+
+<!-- ── PÁGINA: INICIO ── -->
+<main id="page-inicio" class="page active">
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">— Handmade with soul —</p>
+      <h1 class="hero-title">Tejida a mano.<br><em>Hecha para ti.</em></h1>
+      <p class="hero-sub">Piezas únicas de crochet elaboradas con hilos premium. Cada uno unico como tu.</p>
+      <button class="hero-cta" data-page="catalogo" data-filter="todos">Explorar catálogo</button>
+    </div>
+    <div class="hero-scroll-hint"><span></span></div>
+  </section>
+</main>
+
+<!-- ── PÁGINA: CATÁLOGO ── -->
+<main id="page-catalogo" class="page">
+  <div class="page-inner catalog-page">
+    <div class="section-header">
+      <h2 class="section-title">Catálogo</h2>
+      <p class="section-sub">Cada pieza es irrepetible</p>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="todos">Todos</button>
+      <button class="filter-btn" data-filter="tops">Tops</button>
+      <button class="filter-btn" data-filter="bikinis">Bikinis</button>
+      <button class="filter-btn" data-filter="bolsos">Bolsos</button>
+      <button class="filter-btn" data-filter="accesorios">Accesorios</button>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+</main>
+
+<!-- ── PÁGINA: NOSOTROS ── -->
+<main id="page-nosotros" class="page">
+  <div class="page-inner">
+    <section class="about-section">
+      <div class="about-inner">
+        <div class="about-text">
+          <p class="section-eyebrow">— Nuestra historia —</p>
+          <h2 class="about-title">No somos solo<br><em>una tienda más.</em></h2>
+          <p>Cada pieza que sale de nuestras manos lleva consigo horas de dedicación, amor y una intención: que quien la use se sienta tan única como la prenda que viste.</p>
+          <p>Usamos exclusivamente <strong>hilos importados de alta calidad</strong> — fibras naturales de calidad premium, seleccionadas por su textura, resistencia y esa textura que ninguna máquina puede replicar.</p>
+          <p>Somos artesanas de corazón bohemio, creyentes de que la moda lenta es la moda que perdura. Aquí no hay producción en masa: cada top, cada bikini, cada bolso es una <em>gran obra</em>.</p>
+          <div class="about-pillars">
+            <div class="pillar"><span class="pillar-icon">✦</span><strong>100% artesanal</strong><p>Tejido a mano, punto por punto</p></div>
+            <div class="pillar"><span class="pillar-icon">✦</span><strong>Materiales premium</strong><p>Hilos importados seleccionados</p></div>
+            <div class="pillar"><span class="pillar-icon">✦</span><strong>Piezas únicas</strong><p>Ninguna es exactamente igual</p></div>
+          </div>
+        </div>
+        <div class="about-img">
+          <div class="about-img-frame">
+<img src="https://i.postimg.cc/MpNbBdSN/Gemini-Generated-Image-yr92heyr92heyr92.png" alt="Melek Nakis Crochet Minimalista" style="max-width: 100%; height: auto;">          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- ── PÁGINA: ENVÍOS Y PAGOS ── -->
+<main id="page-envios" class="page">
+  <div class="page-inner">
+    <section class="info-section shipping-payment-section">
+      <div class="info-inner">
+        <p class="section-eyebrow">— Sin sorpresas —</p>
+        <h2 class="info-title">Envíos y pagos</h2>
+        <p class="info-lead">Todo lo importante antes de confirmar tu pedido: tiempos de preparación, transporte y formas de pago disponibles.</p>
+        <div class="info-cards">
+          <div class="info-card">
+            <div class="info-icon">📦</div>
+            <h3>Prendas en stock</h3>
+            <p class="info-days">3 días hábiles</p>
+            <p>Tiempo de alistamiento y envío de guía desde nuestra parte. Tu pedido sale en MAXIMO 5 días hábiles.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">🧶</div>
+            <h3>Envio Gratis</h3>
+            <p class="info-days">10 días hábiles</p>
+            <p>Disfruta de envío gratuito a cualquier destino en Colombia por compras superiores a $200.000 COP..</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">🚚</div>
+            <h3>Transportadora</h3>
+            <p class="info-days">Tiempo aparte</p>
+            <p>Una vez despachado, el tiempo de la transportadora corre aparte. Envíos internacionales también disponibles.</p>
+          </div>
+        </div>
+        <p class="info-note">⚠️ El costo de envío <strong>no está incluido</strong> en el precio del producto y varía según tu ciudad.</p>
+        <div class="payment-block">
+          <p class="section-eyebrow">— Fácil y seguro —</p>
+          <h3 class="payment-title">Métodos de pago</h3>
+        </div>
+        <div class="payment-methods">
+          <div class="payment-card"><div class="payment-logo">🏦</div><strong>Bancolombia</strong><p>Transferencia o depósito</p></div>
+          <div class="payment-card"><div class="payment-logo">🔑</div><strong>Llave</strong><p>Pago con llave al instante desde cualquier banco</p></div>
+          <div class="payment-card"><div class="payment-logo">💳</div><strong>Mercado Pago</strong><p>Link de pago seguro</p></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- ── PÁGINA: GUÍA DE TALLAS ── -->
+<main id="page-guia-tallas" class="page">
+  <div class="page-inner">
+    <section class="size-guide-section">
+      <div class="size-guide-inner">
+        <p class="section-eyebrow">— Elige con calma —</p>
+        <h2 class="size-guide-title">Guía de tallas</h2>
+        <p class="size-guide-sub">Medidas universales aproximadas para prendas superiores, al estilo de tablas comerciales tipo SHEIN. Si estás entre dos tallas, elige la mayor para más comodidad.</p>
+
+        <div class="size-table-grid">
+          <article class="size-table-card">
+            <div class="size-table-head">
+              <span>Tops tejidos</span>
+              <small>Medidas en cm</small>
+            </div>
+            <div class="table-scroll">
+              <table class="size-table">
+                <thead>
+                  <tr>
+                    <th>Talla</th>
+                    <th>Busto</th>
+                    <th>Bajo busto</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>XS</td><td>50-60</td><td>65</td></tr>
+                  <tr><td>S</td><td>60-75</td><td>65-70</td></tr>
+                  <tr><td>M</td><td>75-85</td><td>70-78</td></tr>
+                  <tr><td>L</td><td>85-95</td><td>78-90</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="size-table-card">
+            <div class="size-table-head">
+              <span>Bikinis</span>
+              <small>Top + parte inferior</small>
+            </div>
+            <div class="table-scroll">
+              <table class="size-table">
+                <thead>
+                  <tr>
+                    <th>Talla</th>
+                    <th>Busto</th>
+                    <th>Cintura</th>
+                    <th>Cadera</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>XS</td><td>50-60</td><td>55-63</td><td>84-88</td></tr>
+                  <tr><td>S</td><td>60-70</td><td>63-70</td><td>89-93</td></tr>
+                  <tr><td>M</td><td>70-80</td><td>70-74</td><td>94-98</td></tr>
+                  <tr><td>L</td><td>80-90</td><td>75-80</td><td>99-105</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+
+        <div class="measure-note">
+          <strong>Cómo medirte:</strong>
+          <span>Busto: alrededor de la parte más amplia. Bajo busto: justo debajo del busto. Cintura: la parte más angosta. Cadera: la parte más amplia.</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- ── PÁGINA: GARANTÍAS ── -->
+<main id="page-garantias" class="page">
+  <div class="page-inner">
+    <section class="guarantee-section">
+      <div class="guarantee-inner">
+        <p class="section-eyebrow">— Tu tranquilidad primero —</p>
+        <h2 class="guarantee-title">Garantías y devoluciones</h2>
+        <div class="guarantee-grid">
+          <div class="guarantee-item"><h4>✦ Garantía de calidad</h4><p>Garantizamos la calidad artesanal de cada pieza. Antes del envío, enviamos fotos y videos del producto para confirmar su estado.
+
+Si recibes un producto con defecto de fabricación, lo reemplazaremos sin costo dentro de los 5 días hábiles siguientes a la entrega. Para aplicar la garantía, es obligatorio enviar un video mostrando la apertura del paquete desde el inicio y evidenciar que el defecto estaba presente al momento de recibirlo.
+
+No se aceptan reclamaciones sin evidencia ni después del plazo establecido, conforme a la ley aplicable.
+.</p></div>
+<div class="guarantee-item">
+  <h4>✦ Cambios de talla</h4>
+  <p>
+    Aceptamos cambios de talla dentro de los 2 días hábiles de recibido el pedido, siempre que la prenda esté en perfecto estado, sin uso, con etiqueta y en su empaque original. El costo de envío del cambio corre por cuenta del cliente.
+    
+    <br><br>
+    
+    <strong>No aplica a personalizados.</strong>
+  </p>
+</div>
+          <div class="guarantee-item"><h4>✦ Política de devoluciones</h4><p>No aceptamos devoluciones por cambio de opinión en productos personalizados o hechos a medida, ya que son elaborados exclusivamente para ti. En productos en stock, se evalúa cada caso individualmente.</p></div>
+          <div class="guarantee-item"><h4>✦ Proceso de reclamación</h4><p>Para iniciar cualquier reclamación, escríbenos por WhatsApp o Instagram con fotos del producto dentro del plazo establecido. Respondemos en un máximo de 24 horas hábiles.</p></div>
+          <div class="guarantee-item"><h4>✦ Cuidado de tus prendas</h4><p>Recomendamos lavar a mano con agua fría y jabón suave. No exprimir, dejar secar a la sombra extendido. El uso incorrecto del producto exime a MELEK de responsabilidad por deterioro prematuro.</p></div>
+          <div class="guarantee-item"><h4>✦ Variaciones de color</h4><p>Los colores pueden variar levemente según la pantalla de cada dispositivo. Hacemos lo posible por fotografiar fielmente los colores reales, pero pequeñas diferencias no constituyen defecto ni motivo de cambio.</p></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- ── PÁGINA: CONTACTO ── -->
+<main id="page-contacto" class="page">
+  <div class="page-inner">
+    <section class="contact-section">
+      <div class="contact-inner">
+        <p class="section-eyebrow">— Hablemos —</p>
+        <h2 class="contact-title">Contáctanos</h2>
+        <p class="contact-sub">Estamos aquí para ayudarte. Escríbenos por cualquiera de estos canales.</p>
+        <div class="contact-channels">
+          <a href="#" id="contact-wa" target="_blank" class="contact-channel wa-channel">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            <span>WhatsApp</span>
+          </a>
+          <a href="#" id="contact-ig" target="_blank" class="contact-channel ig-channel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            <span>Instagram</span>
+          </a>
+          <a href="#" id="contact-tt" target="_blank" class="contact-channel tt-channel">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg>
+            <span>TikTok</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- ── FOOTER (siempre visible) ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">MELEK NAKIŞ</div>
+    <p class="footer-tagline">Tejido a mano. Donde el arte y la moda se entrelazan.</p>
+    <p class="footer-copy">© 2026 MELEK NAKIŞ. Todos los derechos reservados. Santa Marta, Colombia.</p>
+  </div>
+</footer>
+
+<!-- ── MODAL PRODUCTO ── -->
+<div id="productModal" class="modal" role="dialog" aria-modal="true">
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ── CARRITO LATERAL ── -->
+<div id="cartPanel" class="cart-panel">
+  <div class="cart-header">
+    <h3>Mi carrito</h3>
+    <button id="closeCart">✕</button>
+  </div>
+  <div id="cartItems" class="cart-items"></div>
+  <div class="cart-footer" id="cartFooter"></div>
+</div>
+
+<!-- ── MODAL CHECKOUT ── -->
+<div id="checkoutModal" class="modal" role="dialog" aria-modal="true">
+  <div class="modal-backdrop" id="checkoutBackdrop"></div>
+  <div class="modal-box checkout-box">
+    <button class="modal-close" id="checkoutClose">✕</button>
+    <h2 class="checkout-title">Finalizar pedido</h2>
+    <p class="checkout-note">⚠️ El costo de envío <strong>no está incluido</strong> en el total.</p>
+    <div id="checkoutSummary" class="checkout-summary"></div>
+    <form id="checkoutForm" class="checkout-form" onsubmit="return false;">
+      <div class="form-row"><label>Nombre completo *</label><input type="text" id="cf-nombre" placeholder="Tu nombre" required /></div>
+      <div class="form-row"><label>Teléfono *</label><input type="tel" id="cf-telefono" placeholder="Ej: 3001234567" required /></div>
+      <div class="form-row"><label>Ciudad *</label><input type="text" id="cf-ciudad" placeholder="Tu ciudad" required /></div>
+      <div class="form-row"><label>Departamento *</label><input type="text" id="cf-dpto" placeholder="Tu departamento" required /></div>
+      <div class="form-row"><label>Dirección completa *</label><input type="text" id="cf-direccion" placeholder="Calle, número, barrio, apartamento..." required /></div>
+      <div class="form-row">
+        <label>Método de pago *</label>
+        <select id="cf-pago" required>
+          <option value="">Selecciona...</option>
+          <option value="Bancolombia (transferencia)">Bancolombia </option>
+          <option value="Llave Bancolombia">Llave </option>
+          <option value="Mercado Pago">Mercado Pago</option>
+        </select>
+      </div>
+      <div class="form-row"><label>Notas adicionales</label><textarea id="cf-notas" placeholder="Medidas especiales, etc."></textarea></div>
+      <button type="button" id="sendWhatsApp" class="wpp-send-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        Enviar pedido por WhatsApp
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ── FLOATING WHATSAPP ── -->
+<a id="floatingWA" href="#" target="_blank" class="floating-wa" aria-label="Hablar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  <span class="floating-wa-text">Comprar por WhatsApp</span>
+</a>
+
+<script src="script.js"></script>
+</body>
+</html>
