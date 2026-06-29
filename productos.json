@@ -92,9 +92,9 @@
       "variantes": {
         "Blue": { "Único": true  },
         "Green":   { "Único": true  }
-      }
-    },
-   
+      } 
+    },  
+        
     {
       "id": "acc-001",
       "categoria": "accesorios",
