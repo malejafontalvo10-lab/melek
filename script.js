@@ -9,7 +9,7 @@
 
 // ── CONFIGURACIÓN ──────────────────────────
 const WHATSAPP_NUMBER = "573502997986";
-const INSTAGRAM_URL   = "https://instagram.com/meleknakish";
+const INSTAGRAM_URL   = "https://instagram.com/meleknakis.col";
 const TIKTOK_URL      = "https://tiktok.com/@melek.col";
 
 // ── ESTADO GLOBAL ──────────────────────────
