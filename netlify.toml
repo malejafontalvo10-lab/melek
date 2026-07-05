@@ -1,0 +1,9 @@
+[build]
+  publish = "front"
+
+# SPA fallback: cualquier ruta (ej. /catalogo, /guia-de-tallas, /producto/123)
+# sirve index.html para que el router de script.js tome el control en el cliente.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -48,11 +48,78 @@ document.addEventListener("DOMContentLoaded", async () => {
   updateCartUI();
   await loadProducts();
   await initAuth(); // si hay sesión activa, reemplaza el carrito local por el del servidor
+  renderRoute(parsePath(location.pathname)); // sincroniza la UI con la URL actual (deep-link / refresh)
 });
 
 // ══════════════════════════════════════════
-// SPA — NAVEGACIÓN POR PÁGINAS
+// SPA — NAVEGACIÓN POR PÁGINAS + ROUTER (History API)
 // ══════════════════════════════════════════
+const PAGE_TITLES = {
+  inicio:        "MELEK NAKIŞ — Tejidos a Mano",
+  catalogo:      "Catálogo — MELEK NAKIŞ",
+  nosotros:      "Nosotros — MELEK NAKIŞ",
+  envios:        "Envíos y pagos — MELEK NAKIŞ",
+  "guia-tallas": "Guía de tallas — MELEK NAKIŞ",
+  garantias:     "Garantías — MELEK NAKIŞ",
+  login:         "Iniciar sesión — MELEK NAKIŞ",
+  cuenta:        "Mi perfil — MELEK NAKIŞ",
+};
+
+const CATALOG_FILTER_LABELS = { tops: "Tops", bikinis: "Bikinis", bolsos: "Bolsos", accesorios: "Accesorios" };
+const CATALOG_FILTERS = ["todos", "tops", "bikinis", "bolsos", "accesorios"];
+
+// Rutas "base" (páginas completas, sin contar los overlays de producto/carrito)
+const BASE_PAGE_ROUTES = [
+  { path: "/",               page: "inicio" },
+  { path: "/nosotros",       page: "nosotros" },
+  { path: "/envios-y-pagos", page: "envios" },
+  { path: "/guia-de-tallas", page: "guia-tallas" },
+  { path: "/garantias",      page: "garantias" },
+  { path: "/login",          page: "login" },
+  { path: "/perfil",         page: "cuenta" },
+];
+
+let currentBasePage   = "inicio";
+let currentBaseFilter = null;
+
+function titleForPage(pageId, filter) {
+  if (pageId === "catalogo" && filter && filter !== "todos") {
+    return `${CATALOG_FILTER_LABELS[filter] || filter} — Catálogo — MELEK NAKIŞ`;
+  }
+  return PAGE_TITLES[pageId] || PAGE_TITLES.inicio;
+}
+
+function setTitle(title) {
+  document.title = title;
+}
+
+function pathForPage(pageId, filter) {
+  if (pageId === "catalogo") {
+    return filter && filter !== "todos" ? `/catalogo/${filter}` : "/catalogo";
+  }
+  const route = BASE_PAGE_ROUTES.find(r => r.page === pageId);
+  return route ? route.path : "/";
+}
+
+// Interpreta un pathname y devuelve la ruta que le corresponde
+function parsePath(path) {
+  const parts = path.split("/").filter(Boolean);
+
+  if (parts[0] === "producto" && parts[1]) return { type: "producto", id: parts[1] };
+  if (parts[0] === "carrito") return { type: "carrito" };
+
+  if (parts[0] === "catalogo") {
+    const filter = CATALOG_FILTERS.includes(parts[1]) ? parts[1] : "todos";
+    return { type: "page", page: "catalogo", filter };
+  }
+  if (parts.length === 0) return { type: "page", page: "inicio" };
+
+  const route = BASE_PAGE_ROUTES.find(r => r.path === "/" + parts[0]);
+  if (route) return { type: "page", page: route.page };
+
+  return { type: "notfound" };
+}
+
 function showPage(pageId, filter) {
   // Ocultar todas las páginas
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
@@ -78,7 +145,94 @@ function showPage(pageId, filter) {
   // Marcar link activo en nav
   document.querySelectorAll(".nav-link").forEach(l => l.classList.remove("active-nav"));
   document.querySelectorAll(`.nav-link[data-page="${pageId}"]`).forEach(l => l.classList.add("active-nav"));
+
+  setTitle(titleForPage(pageId, filter));
 }
+
+// Reconstruye toda la UI (página base + overlay si corresponde) a partir de una ruta.
+// Se usa en la carga inicial y en popstate (atrás/adelante del navegador).
+function renderRoute(route) {
+  if (route.type === "producto") {
+    showPage(currentBasePage, currentBaseFilter);
+    const product = products.find(p => String(p.id) === String(route.id));
+    if (product) {
+      openModal(product);
+      setTitle(`${product.nombre} — MELEK NAKIŞ`);
+    }
+    return;
+  }
+
+  if (route.type === "carrito") {
+    showPage(currentBasePage, currentBaseFilter);
+    openCart();
+    setTitle("Carrito — MELEK NAKIŞ");
+    return;
+  }
+
+  closeModal("productModal");
+  closeCart();
+
+  if (route.type === "page") {
+    currentBasePage   = route.page;
+    currentBaseFilter = route.filter || null;
+    showPage(route.page, route.filter);
+    return;
+  }
+
+  // Ruta no reconocida → inicio
+  currentBasePage   = "inicio";
+  currentBaseFilter = null;
+  showPage("inicio");
+}
+
+// Navega a una página base actualizando la URL (History API), sin recargar la página
+function navigate(path, { replace = false } = {}) {
+  if (location.pathname !== path) {
+    history[replace ? "replaceState" : "pushState"](null, "", path);
+  }
+  renderRoute(parsePath(path));
+}
+
+function goToPage(pageId, filter) {
+  navigate(pathForPage(pageId, filter));
+}
+
+// Overlays (modal de producto / panel de carrito): se apilan sobre la página base actual
+function pushOverlay(path) {
+  if (location.pathname !== path) history.pushState({ overlay: true }, "", path);
+}
+
+function openProductAndPush(product) {
+  openModal(product);
+  setTitle(`${product.nombre} — MELEK NAKIŞ`);
+  pushOverlay(`/producto/${product.id}`);
+}
+
+function openCartAndPush() {
+  openCart();
+  setTitle("Carrito — MELEK NAKIŞ");
+  pushOverlay("/carrito");
+}
+
+// Cierra un overlay y hace coincidir la URL con la página base subyacente.
+// Si el overlay fue empujado por nosotros (history.state.overlay) usamos history.back()
+// para que el botón "atrás" del navegador quede consistente; si se llegó directo
+// por URL (sin entrada previa nuestra) simplemente reemplazamos la URL.
+function closeOverlayAndPop(closeFn) {
+  closeFn();
+  const onOverlay = location.pathname.startsWith("/producto/") || location.pathname === "/carrito";
+  if (!onOverlay) return;
+  if (history.state && history.state.overlay) {
+    history.back();
+  } else {
+    history.replaceState(null, "", pathForPage(currentBasePage, currentBaseFilter));
+    setTitle(titleForPage(currentBasePage, currentBaseFilter));
+  }
+}
+
+window.addEventListener("popstate", () => {
+  renderRoute(parsePath(location.pathname));
+});
 
 // Delegar todos los clicks que tengan data-page
 document.addEventListener("click", (e) => {
@@ -87,7 +241,7 @@ document.addEventListener("click", (e) => {
   e.preventDefault();
   const page   = el.dataset.page;
   const filter = el.dataset.filter || null;
-  showPage(page, filter);
+  navigate(pathForPage(page, filter));
   closeNav();
 });
 
@@ -96,7 +250,7 @@ document.addEventListener("click", (e) => {
 // ══════════════════════════════════════════
 async function loadProducts() {
   try {
-    const res  = await fetch("productos.json");
+    const res  = await fetch("/productos.json");
     const data = await res.json();
     products   = data.productos;
   } catch (e) {
@@ -181,9 +335,9 @@ function renderProducts(list) {
     `;
 
     // Imagen clickeable → modal detalle
-    card.querySelector(".product-img-wrap").addEventListener("click", () => openModal(p));
-    card.querySelector(".product-name").addEventListener("click", () => openModal(p));
-    card.querySelector(".product-cat").addEventListener("click",  () => openModal(p));
+    card.querySelector(".product-img-wrap").addEventListener("click", () => openProductAndPush(p));
+    card.querySelector(".product-name").addEventListener("click", () => openProductAndPush(p));
+    card.querySelector(".product-cat").addEventListener("click",  () => openProductAndPush(p));
 
     // Botón carrito → quick-add toggle
     const cartBtn = card.querySelector(".card-cart-btn");
@@ -272,8 +426,8 @@ function initQuickAdd(product, card) {
 // MODAL DE DETALLE
 // ══════════════════════════════════════════
 function initModal() {
-  document.getElementById("modalClose").addEventListener("click", () => closeModal("productModal"));
-  document.getElementById("modalBackdrop").addEventListener("click", () => closeModal("productModal"));
+  document.getElementById("modalClose").addEventListener("click", () => closeOverlayAndPop(() => closeModal("productModal")));
+  document.getElementById("modalBackdrop").addEventListener("click", () => closeOverlayAndPop(() => closeModal("productModal")));
 }
 
 function openModal(product) {
@@ -370,7 +524,7 @@ function openModal(product) {
       if (!selectedColor) { showToast("Selecciona un color"); return; }
       if (!selectedSize)  { showToast("Selecciona una talla"); return; }
       addToCart(product, selectedColor, selectedSize);
-      closeModal("productModal");
+      closeOverlayAndPop(() => closeModal("productModal"));
     });
   }
 
@@ -424,8 +578,8 @@ function loadCartLocal() {
 }
 
 function initCart() {
-  document.getElementById("cartBtn").addEventListener("click", openCart);
-  document.getElementById("closeCart").addEventListener("click", closeCart);
+  document.getElementById("cartBtn").addEventListener("click", openCartAndPush);
+  document.getElementById("closeCart").addEventListener("click", () => closeOverlayAndPop(closeCart));
 }
 
 function addToCart(product, color, size) {
@@ -582,7 +736,7 @@ function openCheckout() {
   if (!currentUser) {
     closeCart();
     showToast("Inicia sesión para finalizar tu pedido");
-    showPage("login");
+    goToPage("login");
     return;
   }
   closeCart();
@@ -741,7 +895,7 @@ function initNav() {
     menuBtn.classList.add("active");
   });
   closeBtn.addEventListener("click", closeNav);
-  overlay.addEventListener("click", () => { closeNav(); closeCart(); });
+  overlay.addEventListener("click", () => { closeNav(); closeOverlayAndPop(closeCart); });
 
   // Toggle submenu catálogo
   const catToggle = document.getElementById("navCatToggle");
@@ -798,7 +952,8 @@ function initSocials() {
 async function initAuth() {
   document.getElementById("userBtn").addEventListener("click", (e) => {
     e.preventDefault();
-    showPage(currentUser ? "cuenta" : "login");
+    e.stopPropagation(); // evita que el delegador genérico de [data-page] navegue a /login cuando ya hay sesión
+    goToPage(currentUser ? "cuenta" : "login");
   });
 
   document.querySelectorAll(".auth-tab").forEach(tab => {
@@ -866,7 +1021,7 @@ async function handleLogin(e) {
     await loadCurrentUser();
     await mergeCartOnLogin();
     document.getElementById("loginForm").reset();
-    showPage("cuenta");
+    goToPage("cuenta");
     showToast("Sesión iniciada");
   } catch (err) {
     errorEl.textContent = "No pudimos conectar. Intenta de nuevo.";
@@ -898,7 +1053,7 @@ async function handleRegister(e) {
     if (data.session) {
       await loadCurrentUser();
       await mergeCartOnLogin();
-      showPage("cuenta");
+      goToPage("cuenta");
       showToast("Cuenta creada");
     } else {
       showToast("Revisa tu correo para confirmar la cuenta");
@@ -923,7 +1078,7 @@ async function handleLogout() {
   saveCartLocal();
   updateCartUI();
   updateAuthUI();
-  showPage("inicio");
+  goToPage("inicio");
 }
 
 // Refleja el estado de sesión en la nav, el botón de usuario y la página de cuenta.
@@ -1082,10 +1237,14 @@ function showToast(msg) {
 // ══════════════════════════════════════════
 document.addEventListener("keydown", e => {
   if (e.key === "Escape") {
-    closeModal("productModal");
+    if (document.getElementById("productModal").classList.contains("open")) {
+      closeOverlayAndPop(() => closeModal("productModal"));
+    }
     closeModal("checkoutModal");
     closeNav();
-    closeCart();
+    if (document.getElementById("cartPanel").classList.contains("open")) {
+      closeOverlayAndPop(closeCart);
+    }
     document.querySelectorAll(".quick-add-panel.open").forEach(p => p.classList.remove("open"));
   }
 });
