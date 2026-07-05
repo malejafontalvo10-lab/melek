@@ -45,13 +45,13 @@
       "fotosPorColor": {
         "Gold": ["https://i.postimg.cc/15MwGQKB/dorado.jpg"],
         "Black": ["https://i.postimg.cc/28ThQDx0/negro.jpg"],
-        "Whithe": ["https://i.postimg.cc/qMQysTGj/blanco.jpg"],
+        "White": ["https://i.postimg.cc/qMQysTGj/blanco.jpg"],
         "Green": ["https://i.postimg.cc/x1CHg4sH/verde.jpg"]
       },
       "variantes": {
         "Gold":  { "XS": true,  "S": true,  "M": true,  "L": false },
         "Black":    { "XS": true,  "S": true, "M": true,  "L": true  },
-        "Whithe":    { "XS": true, "S": true,  "M": true,  "L": true  },
+        "White":    { "XS": true, "S": true,  "M": true,  "L": true  },
         "Green":    { "XS": true, "S": true,  "M": true,  "L": false  }
       }
     },

@@ -18,6 +18,7 @@ let cart           = [];
 let currentProduct = null;
 let selectedColor  = "";
 let selectedSize   = "";
+let currentUser    = null; // sesión de Supabase Auth, ver initAuth()
 
 // ── FORMATEAR PRECIO ───────────────────────
 function formatPrice(n) {
@@ -36,14 +37,17 @@ function getProductImage(product, color = "") {
 }
 
 // ── INICIALIZACIÓN ─────────────────────────
-document.addEventListener("DOMContentLoaded", () => {
-  loadProducts();
+document.addEventListener("DOMContentLoaded", async () => {
+  cart = loadCartLocal();
   initNav();
   initHeader();
   initSocials();
   initCart();
   initModal();
   initCheckout();
+  updateCartUI();
+  await loadProducts();
+  await initAuth(); // si hay sesión activa, reemplaza el carrito local por el del servidor
 });
 
 // ══════════════════════════════════════════
@@ -64,6 +68,11 @@ function showPage(pageId, filter) {
   if (pageId === "catalogo") {
     const f = filter || "todos";
     setFilter(f);
+  }
+
+  // Si vamos a la cuenta, cargar el historial de pedidos
+  if (pageId === "cuenta" && currentUser) {
+    loadUserOrders();
   }
 
   // Marcar link activo en nav
@@ -399,18 +408,35 @@ function closeModal(id) {
 // ══════════════════════════════════════════
 // CARRITO
 // ══════════════════════════════════════════
+const CART_STORAGE_KEY = "melek_cart";
+
+function saveCartLocal() {
+  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+}
+
+function loadCartLocal() {
+  try {
+    return JSON.parse(localStorage.getItem(CART_STORAGE_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
 function initCart() {
   document.getElementById("cartBtn").addEventListener("click", openCart);
   document.getElementById("closeCart").addEventListener("click", closeCart);
 }
 
 function addToCart(product, color, size) {
-  const existing = cart.find(i => i.id === product.id && i.color === color && i.size === size);
-  if (existing) {
-    existing.qty++;
+  let item = cart.find(i => i.id === product.id && i.color === color && i.size === size);
+  if (item) {
+    item.qty++;
   } else {
-    cart.push({ ...product, color, size, qty: 1 });
+    item = { ...product, color, size, qty: 1 };
+    cart.push(item);
   }
+  saveCartLocal();
+  if (currentUser) syncCartItemToServer(item);
   updateCartUI();
   openCart();
   showToast(`"${product.nombre}" agregado al carrito`);
@@ -418,11 +444,24 @@ function addToCart(product, color, size) {
 
 function removeFromCart(id, color, size) {
   cart = cart.filter(i => !(i.id === id && i.color === color && i.size === size));
+  saveCartLocal();
+  if (currentUser) removeCartItemFromServer(id, color, size);
   updateCartUI();
 }
 
+const SHIPPING_FREE_THRESHOLD = 200000;
+const SHIPPING_COST           = 12000;
+
 function cartTotal() {
   return cart.reduce((sum, i) => sum + i.precio * i.qty, 0);
+}
+
+function shippingCost() {
+  return cartTotal() >= SHIPPING_FREE_THRESHOLD ? 0 : SHIPPING_COST;
+}
+
+function orderTotal() {
+  return cartTotal() + shippingCost();
 }
 
 function updateCartUI() {
@@ -450,12 +489,21 @@ function updateCartUI() {
     </div>
   `).join("");
 
+  const envio = shippingCost();
   footerEl.innerHTML = `
     <div class="cart-total">
-      <span>Total</span>
+      <span>Subtotal</span>
       <strong>${formatPrice(cartTotal())}</strong>
     </div>
-    <p class="cart-note">⚠️ Envío no incluido — se calcula aparte</p>
+    <div class="cart-total">
+      <span>Envío</span>
+      <strong>${envio === 0 ? "Gratis" : formatPrice(envio)}</strong>
+    </div>
+    <div class="cart-total">
+      <span>Total</span>
+      <strong>${formatPrice(orderTotal())}</strong>
+    </div>
+    <p class="cart-note">${envio === 0 ? "✓ Envío gratis por compra desde " + formatPrice(SHIPPING_FREE_THRESHOLD) : "Envío de " + formatPrice(SHIPPING_COST) + " — gratis desde " + formatPrice(SHIPPING_FREE_THRESHOLD)}</p>
     <button class="checkout-btn" id="checkoutBtn">Finalizar pedido</button>
   `;
 
@@ -485,26 +533,82 @@ function initCheckout() {
   document.getElementById("checkoutClose").addEventListener("click", () => closeModal("checkoutModal"));
   document.getElementById("checkoutBackdrop").addEventListener("click", () => closeModal("checkoutModal"));
   document.getElementById("sendWhatsApp").addEventListener("click", sendOrder);
+
+  document.querySelectorAll(".payment-option").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".payment-option").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      document.getElementById("cf-pago").value = btn.dataset.value;
+      updateCheckoutSubmitButton();
+    });
+  });
+}
+
+function resetPaymentSelection() {
+  document.getElementById("cf-pago").value = "";
+  document.querySelectorAll(".payment-option").forEach(b => b.classList.remove("selected"));
+  updateCheckoutSubmitButton();
+}
+
+function updateCheckoutSubmitButton() {
+  const pago  = document.getElementById("cf-pago").value;
+  const btn   = document.getElementById("sendWhatsApp");
+  const label = document.getElementById("sendWhatsAppLabel");
+  const waIcon = document.getElementById("sendWhatsAppIcon");
+  const mpIcon = document.getElementById("sendMPIcon");
+
+  btn.classList.remove("pay-whatsapp", "pay-mercadopago");
+  btn.disabled = !pago;
+
+  if (pago === "Mercado Pago") {
+    btn.classList.add("pay-mercadopago");
+    waIcon.style.display = "none";
+    mpIcon.style.display = "";
+    label.textContent = "Pagar con Mercado Pago";
+  } else if (pago === "Transferencia") {
+    btn.classList.add("pay-whatsapp");
+    waIcon.style.display = "";
+    mpIcon.style.display = "none";
+    label.textContent = "Se redirigirá a WhatsApp";
+  } else {
+    waIcon.style.display = "none";
+    mpIcon.style.display = "none";
+    label.textContent = "Selecciona un método de pago";
+  }
 }
 
 function openCheckout() {
+  if (!currentUser) {
+    closeCart();
+    showToast("Inicia sesión para finalizar tu pedido");
+    showPage("login");
+    return;
+  }
   closeCart();
+  const envio = shippingCost();
   document.getElementById("checkoutSummary").innerHTML = cart.map(i => `
     <div class="checkout-summary-item">
       <span>${i.nombre} × ${i.qty} (${i.color} / ${i.size})</span>
       <span>${formatPrice(i.precio * i.qty)}</span>
     </div>
   `).join("") + `
+    <div class="checkout-summary-item">
+      <span>Envío</span>
+      <span>${envio === 0 ? "Gratis" : formatPrice(envio)}</span>
+    </div>
     <div class="checkout-total-row">
-      <span>Total productos</span>
-      <span>${formatPrice(cartTotal())}</span>
+      <span>Total a pagar</span>
+      <span>${formatPrice(orderTotal())}</span>
     </div>
   `;
+  resetPaymentSelection();
   document.getElementById("checkoutModal").classList.add("open");
   document.body.style.overflow = "hidden";
 }
 
-function sendOrder() {
+async function sendOrder() {
+  if (!currentUser) { showToast("Inicia sesión para finalizar tu pedido"); return; }
+
   const nombre   = document.getElementById("cf-nombre").value.trim();
   const telefono = document.getElementById("cf-telefono").value.trim();
   const ciudad   = document.getElementById("cf-ciudad").value.trim();
@@ -517,19 +621,73 @@ function sendOrder() {
     showToast("Por favor completa todos los campos obligatorios (*)");
     return;
   }
+  if (cart.length === 0) { showToast("Tu carrito está vacío"); return; }
 
-  const items = cart.map(i =>
-    `• ${i.nombre} | Color: ${i.color} | Talla: ${i.size} | Cant: ${i.qty} | ${formatPrice(i.precio * i.qty)}`
-  ).join("\n");
+  const submitBtn = document.getElementById("sendWhatsApp");
+  submitBtn.disabled = true;
 
-  const msg = `
+  try {
+    const envio = shippingCost();
+
+    const { data: order, error } = await supabase.from("orders").insert({
+      user_id: currentUser.id,
+      total: orderTotal(),
+      costo_envio: envio,
+      nombre_contacto: nombre,
+      telefono,
+      ciudad,
+      departamento: dpto,
+      direccion,
+      metodo_pago: pago,
+      notas: notas || null
+    }).select("id").single();
+
+    if (error) throw error;
+
+    const itemRows = await Promise.all(cart.map(async i => ({
+      order_id: order.id,
+      variant_id: await getVariantId(i.id, i.color, i.size),
+      nombre_producto: i.nombre,
+      color: i.color,
+      talla: i.size,
+      precio_unitario: i.precio,
+      cantidad: i.qty
+    })));
+    await supabase.from("order_items").insert(itemRows.filter(r => r.variant_id));
+
+    if (pago === "Mercado Pago") {
+      // Pago en línea: el pedido se paga en Mercado Pago, no pasa por WhatsApp.
+      const { data: pref, error: prefError } = await supabase.functions.invoke("create-preference", {
+        body: { order_id: order.id }
+      });
+
+      if (prefError || !pref?.init_point) {
+        throw prefError || new Error("Mercado Pago no devolvió link de pago");
+      }
+
+      await clearCartAfterOrder();
+      closeModal("checkoutModal");
+      document.getElementById("checkoutForm").reset();
+      showToast("Redirigiendo a Mercado Pago...");
+      window.location.href = pref.init_point;
+      return;
+    }
+
+    // Transferencia / llave: se coordina manualmente por WhatsApp, como antes.
+    const items = cart.map(i =>
+      `• ${i.nombre} | Color: ${i.color} | Talla: ${i.size} | Cant: ${i.qty} | ${formatPrice(i.precio * i.qty)}`
+    ).join("\n");
+
+    const msg = `
 🛍️ *NUEVO PEDIDO — MELEK NAKIŞ*
+📦 Pedido #${order.id.slice(0, 8)}
 
 *PRODUCTOS:*
 ${items}
 
-💰 *Total productos:* ${formatPrice(cartTotal())}
-⚠️ Envío no incluido
+💰 *Subtotal:* ${formatPrice(cartTotal())}
+🚚 *Envío:* ${envio === 0 ? "Gratis" : formatPrice(envio)}
+💳 *Total a pagar:* ${formatPrice(orderTotal())}
 
 ---
 *DATOS DE ENTREGA:*
@@ -543,10 +701,30 @@ ${notas ? `📝 Notas: ${notas}` : ""}
 
 ---
 ¡Hola! Quiero confirmar este pedido. 🌊
-  `.trim();
+    `.trim();
 
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
-  closeModal("checkoutModal");
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+
+    await clearCartAfterOrder();
+    closeModal("checkoutModal");
+    document.getElementById("checkoutForm").reset();
+    resetPaymentSelection();
+    showToast("¡Pedido creado! Te contactaremos por WhatsApp para coordinar el pago.");
+  } catch (err) {
+    showToast("No pudimos crear tu pedido, intenta de nuevo");
+  } finally {
+    submitBtn.disabled = false;
+  }
+}
+
+async function clearCartAfterOrder() {
+  if (currentUser) {
+    const cartId = await getOrCreateUserCart(currentUser.id);
+    await supabase.from("cart_items").delete().eq("cart_id", cartId);
+  }
+  cart = [];
+  saveCartLocal();
+  updateCartUI();
 }
 
 // ══════════════════════════════════════════
@@ -611,6 +789,275 @@ function initSocials() {
   document.getElementById("nav-tt").href     = TIKTOK_URL;
   document.getElementById("contact-ig").href = INSTAGRAM_URL;
   document.getElementById("contact-tt").href = TIKTOK_URL;
+}
+
+// ══════════════════════════════════════════
+// AUTH — LOGIN / REGISTRO / CUENTA
+// ══════════════════════════════════════════
+async function initAuth() {
+  document.getElementById("userBtn").addEventListener("click", (e) => {
+    e.preventDefault();
+    showPage(currentUser ? "cuenta" : "login");
+  });
+
+  document.querySelectorAll(".auth-tab").forEach(tab => {
+    tab.addEventListener("click", () => setAuthTab(tab.dataset.authTab));
+  });
+
+  document.getElementById("loginForm").addEventListener("submit", handleLogin);
+  document.getElementById("registerForm").addEventListener("submit", handleRegister);
+  document.getElementById("logoutBtn").addEventListener("click", handleLogout);
+
+  // Mantiene currentUser sincronizado si la sesión expira o se cierra desde otra pestaña
+  supabase.auth.onAuthStateChange((_event, session) => {
+    if (!session) { currentUser = null; userCartId = null; updateAuthUI(); }
+  });
+
+  await loadCurrentUser();
+  // Sesión ya activa al cargar la página (no un login nuevo): el servidor manda sobre el carrito
+  if (currentUser) {
+    try {
+      await loadServerCart();
+    } catch (err) {
+      // si falla la sincronización, seguimos con el carrito local ya cargado
+    }
+  }
+}
+
+function setAuthTab(tab) {
+  document.querySelectorAll(".auth-tab").forEach(t => t.classList.toggle("active", t.dataset.authTab === tab));
+  document.getElementById("loginForm").classList.toggle("active", tab === "login");
+  document.getElementById("registerForm").classList.toggle("active", tab === "register");
+}
+
+async function loadCurrentUser() {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) { currentUser = null; updateAuthUI(); return; }
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("nombre")
+    .eq("id", session.user.id)
+    .single();
+
+  currentUser = {
+    id: session.user.id,
+    email: session.user.email,
+    nombre: profile?.nombre || ""
+  };
+  updateAuthUI();
+}
+
+async function handleLogin(e) {
+  e.preventDefault();
+  const errorEl  = document.getElementById("loginError");
+  const submitBtn = document.getElementById("loginSubmit");
+  errorEl.textContent = "";
+
+  const email    = document.getElementById("li-email").value.trim();
+  const password = document.getElementById("li-password").value;
+
+  submitBtn.disabled = true;
+  try {
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) { errorEl.textContent = error.message; return; }
+
+    await loadCurrentUser();
+    await mergeCartOnLogin();
+    document.getElementById("loginForm").reset();
+    showPage("cuenta");
+    showToast("Sesión iniciada");
+  } catch (err) {
+    errorEl.textContent = "No pudimos conectar. Intenta de nuevo.";
+  } finally {
+    submitBtn.disabled = false;
+  }
+}
+
+async function handleRegister(e) {
+  e.preventDefault();
+  const errorEl   = document.getElementById("registerError");
+  const submitBtn = document.getElementById("registerSubmit");
+  errorEl.textContent = "";
+
+  const nombre   = document.getElementById("rg-nombre").value.trim();
+  const email    = document.getElementById("rg-email").value.trim();
+  const password = document.getElementById("rg-password").value;
+
+  submitBtn.disabled = true;
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email, password,
+      options: { data: { nombre } }
+    });
+    if (error) { errorEl.textContent = error.message; return; }
+
+    document.getElementById("registerForm").reset();
+
+    if (data.session) {
+      await loadCurrentUser();
+      await mergeCartOnLogin();
+      showPage("cuenta");
+      showToast("Cuenta creada");
+    } else {
+      showToast("Revisa tu correo para confirmar la cuenta");
+      setAuthTab("login");
+    }
+  } catch (err) {
+    errorEl.textContent = "No pudimos conectar. Intenta de nuevo.";
+  } finally {
+    submitBtn.disabled = false;
+  }
+}
+
+async function handleLogout() {
+  try {
+    await supabase.auth.signOut();
+  } catch (err) {
+    // seguimos limpiando el estado local aunque falle la llamada de red
+  }
+  currentUser = null;
+  userCartId  = null;
+  cart = [];
+  saveCartLocal();
+  updateCartUI();
+  updateAuthUI();
+  showPage("inicio");
+}
+
+// Refleja el estado de sesión en la nav, el botón de usuario y la página de cuenta.
+function updateAuthUI() {
+  document.querySelectorAll(".guest-only").forEach(el => el.classList.toggle("is-hidden", !!currentUser));
+  document.querySelectorAll(".auth-only").forEach(el => el.classList.toggle("is-hidden", !currentUser));
+
+  document.getElementById("accountNombre").textContent = currentUser?.nombre || "—";
+  document.getElementById("accountEmail").textContent  = currentUser?.email  || "—";
+}
+
+async function loadUserOrders() {
+  const list = document.getElementById("ordersList");
+  try {
+    const { data: orders, error } = await supabase
+      .from("orders")
+      .select("id, estado, total, created_at, order_items(nombre_producto, color, talla, cantidad)")
+      .eq("user_id", currentUser.id)
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    if (!orders || orders.length === 0) {
+      list.innerHTML = `<p class="cart-empty">Aún no tienes pedidos.</p>`;
+      return;
+    }
+
+    list.innerHTML = orders.map(o => `
+      <div class="order-card">
+        <div class="order-card-head">
+          <span>Pedido #${o.id.slice(0, 8)}</span>
+          <span class="order-status order-status-${o.estado}">${o.estado}</span>
+        </div>
+        <p class="order-date">${new Date(o.created_at).toLocaleDateString("es-CO")}</p>
+        ${o.order_items.map(it => `<p class="order-item-line">${it.nombre_producto} (${it.color} / ${it.talla}) × ${it.cantidad}</p>`).join("")}
+        <p class="order-total">${formatPrice(o.total)}</p>
+      </div>
+    `).join("");
+  } catch (err) {
+    list.innerHTML = `<p class="cart-empty">No pudimos cargar tus pedidos.</p>`;
+  }
+}
+
+// ══════════════════════════════════════════
+// CARRITO — SINCRONIZACIÓN CON SUPABASE
+// (solo corre si hay sesión iniciada)
+// ══════════════════════════════════════════
+let userCartId = null;
+
+async function getOrCreateUserCart(userId) {
+  if (userCartId) return userCartId;
+
+  const { data: existing } = await supabase.from("carts").select("id").eq("user_id", userId).maybeSingle();
+  if (existing) { userCartId = existing.id; return userCartId; }
+
+  const { data: created } = await supabase.from("carts").insert({ user_id: userId }).select("id").single();
+  userCartId = created.id;
+  return userCartId;
+}
+
+async function getVariantId(slug, color, talla) {
+  const { data } = await supabase
+    .from("product_variants")
+    .select("id, products!inner(slug)")
+    .eq("products.slug", slug)
+    .eq("color", color)
+    .eq("talla", talla)
+    .maybeSingle();
+  return data?.id || null;
+}
+
+async function syncCartItemToServer(item) {
+  const variantId = await getVariantId(item.id, item.color, item.size);
+  if (!variantId) return;
+  const cartId = await getOrCreateUserCart(currentUser.id);
+  await supabase.from("cart_items").upsert(
+    { cart_id: cartId, variant_id: variantId, cantidad: item.qty },
+    { onConflict: "cart_id,variant_id" }
+  );
+}
+
+async function removeCartItemFromServer(id, color, size) {
+  const variantId = await getVariantId(id, color, size);
+  if (!variantId) return;
+  const cartId = await getOrCreateUserCart(currentUser.id);
+  await supabase.from("cart_items").delete().eq("cart_id", cartId).eq("variant_id", variantId);
+}
+
+// Reemplaza el carrito local por el guardado en Supabase (sesión ya activa al cargar la página)
+async function loadServerCart() {
+  const cartId = await getOrCreateUserCart(currentUser.id);
+  const { data: serverItems } = await supabase
+    .from("cart_items")
+    .select("cantidad, product_variants(color, talla, products(slug))")
+    .eq("cart_id", cartId);
+
+  cart = (serverItems || [])
+    .map(si => {
+      const slug    = si.product_variants?.products?.slug;
+      const product = products.find(p => p.id === slug);
+      if (!product) return null;
+      return { ...product, color: si.product_variants.color, size: si.product_variants.talla, qty: si.cantidad };
+    })
+    .filter(Boolean);
+
+  saveCartLocal();
+  updateCartUI();
+}
+
+// Une el carrito de invitado (localStorage) con el del usuario justo al iniciar sesión
+async function mergeCartOnLogin() {
+  const cartId = await getOrCreateUserCart(currentUser.id);
+  const { data: serverItems } = await supabase
+    .from("cart_items")
+    .select("cantidad, product_variants(color, talla, products(slug))")
+    .eq("cart_id", cartId);
+
+  (serverItems || []).forEach(si => {
+    const slug  = si.product_variants?.products?.slug;
+    const color = si.product_variants?.color;
+    const talla = si.product_variants?.talla;
+    if (!slug) return;
+
+    const local = cart.find(i => i.id === slug && i.color === color && i.size === talla);
+    if (local) {
+      local.qty += si.cantidad;
+    } else {
+      const product = products.find(p => p.id === slug);
+      if (product) cart.push({ ...product, color, size: talla, qty: si.cantidad });
+    }
+  });
+
+  saveCartLocal();
+  updateCartUI();
+  await Promise.all(cart.map(syncCartItemToServer));
 }
 
 // ══════════════════════════════════════════

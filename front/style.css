@@ -200,6 +200,11 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
 }
 .header-logo:hover { opacity: 0.55; letter-spacing: 0.4em; }
 
+.header-actions { display: flex; align-items: center; gap: 1.1rem; }
+
+.user-btn { display: flex; align-items: center; color: var(--black); transition: opacity 0.2s, transform 0.2s; }
+.user-btn:hover { opacity: 0.65; transform: scale(1.06); }
+
 .cart-btn { position: relative; display: flex; align-items: center; color: var(--black); transition: opacity 0.2s, transform 0.2s; }
 .cart-btn:hover { opacity: 0.65; transform: scale(1.06); }
 .cart-count {
@@ -726,27 +731,66 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
 .checkout-summary-item { display: flex; justify-content: space-between; font-size: 0.82rem; padding: 0.4rem 0; border-bottom: 1px solid rgba(13,13,13,0.05); }
 .checkout-total-row { display: flex; justify-content: space-between; font-weight: 500; font-size: 0.9rem; padding-top: 0.8rem; margin-top: 0.5rem; border-top: 1px solid rgba(13,13,13,0.12); }
 .checkout-form { padding: 1.5rem 2rem 2rem; }
-.form-row { margin-bottom: 1.2rem; }
+
+.checkout-section-label {
+  font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--olive-dark); font-weight: 600; margin: 1.4rem 0 0.9rem;
+}
+.checkout-section-label:first-child { margin-top: 0; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+.form-row-full { grid-column: 1 / -1; }
+
+.form-row { margin-bottom: 1.2rem; position: relative; }
 .form-row label { display: block; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; }
 .form-row input, .form-row select, .form-row textarea {
   width: 100%; padding: 0.75rem;
   border: 1px solid rgba(13,13,13,0.2); background: transparent;
-  outline: none; transition: border-color 0.25s, box-shadow 0.25s;
+  outline: none; transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
   font-size: 0.88rem; color: var(--black); border-radius: 0;
 }
+.form-row input:hover, .form-row select:hover, .form-row textarea:hover { border-color: rgba(13,13,13,0.35); }
 .form-row input:focus, .form-row select:focus, .form-row textarea:focus {
   border-color: var(--olive);
   box-shadow: 0 0 0 3px rgba(122,139,111,0.12);
+  background: rgba(122,139,111,0.03);
 }
 .form-row textarea { min-height: 80px; resize: vertical; }
-.wpp-send-btn {
+
+/* Selector de método de pago — tarjetas en vez de <select> */
+.payment-options { display: flex; gap: 0.8rem; margin-bottom: 1.4rem; }
+.payment-option {
+  flex: 1; display: flex; align-items: center; gap: 0.7rem;
+  padding: 0.85rem 1rem; text-align: left;
+  border: 1px solid rgba(13,13,13,0.15); background: transparent;
+  cursor: pointer; transition: border-color 0.25s, background 0.25s, transform 0.2s;
+}
+.payment-option:hover { border-color: var(--olive); transform: translateY(-2px); }
+.payment-option.selected { border-color: var(--black); background: var(--sand); }
+.payment-option-icon { display: flex; flex-shrink: 0; color: var(--olive); transition: color 0.25s; }
+.payment-option:hover .payment-option-icon,
+.payment-option.selected .payment-option-icon { color: var(--black); }
+.payment-option-text { display: flex; flex-direction: column; gap: 0.15rem; }
+.payment-option-text strong { font-size: 0.8rem; letter-spacing: 0.03em; }
+.payment-option-text small { font-size: 0.68rem; color: var(--text-muted); line-height: 1.3; }
+
+/* Botón final — cambia de color/ícono según el método elegido */
+.checkout-submit-btn {
   width: 100%; padding: 1.1rem;
-  background: #25D366; color: white;
+  background: var(--sand); color: var(--text-muted);
   font-size: 0.82rem; letter-spacing: 0.15em; text-transform: uppercase;
   display: flex; align-items: center; justify-content: center; gap: 0.8rem;
-  transition: background 0.3s; border: none; cursor: pointer;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s; border: none; cursor: pointer;
 }
-.wpp-send-btn:hover { background: #1da851; }
+.checkout-submit-btn:disabled { cursor: not-allowed; }
+.checkout-submit-btn.pay-whatsapp { background: #25D366; color: white; }
+.checkout-submit-btn.pay-whatsapp:hover { background: #1da851; }
+.checkout-submit-btn.pay-mercadopago {
+  background: var(--cream); color: var(--black);
+  border: 1px solid rgba(13,13,13,0.15);
+  box-shadow: 0 4px 16px rgba(13,13,13,0.08);
+}
+.checkout-submit-btn.pay-mercadopago:hover { background: var(--sand); }
 
 /* ══════════════════════════════
    FLOATING WHATSAPP — LUXURY
@@ -820,6 +864,67 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
 }
 
 /* ══════════════════════════════
+   AUTH — LOGIN / REGISTRO
+══════════════════════════════ */
+.is-hidden { display: none !important; }
+
+.auth-page { max-width: 460px; }
+.auth-box {
+  background: white; border: 1px solid rgba(13,13,13,0.07);
+  padding: 2rem 1.8rem; box-shadow: var(--shadow);
+}
+.auth-tabs { display: flex; margin-bottom: 1.8rem; border-bottom: 1px solid rgba(13,13,13,0.09); }
+.auth-tab {
+  flex: 1; padding: 0.9rem 0; text-align: center;
+  font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-muted); border-bottom: 2px solid transparent;
+  transition: color 0.25s, border-color 0.25s;
+}
+.auth-tab.active { color: var(--black); border-color: var(--olive); }
+.auth-tab:hover { color: var(--olive); }
+
+.auth-form { display: none; }
+.auth-form.active { display: block; animation: quickFade 0.22s var(--ease); }
+
+.auth-submit-btn {
+  width: 100%; padding: 1rem; margin-top: 0.4rem;
+  background: var(--black); color: var(--cream);
+  font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+  border: none; cursor: pointer; transition: background 0.3s;
+}
+.auth-submit-btn:hover { background: var(--olive); }
+
+.auth-error {
+  font-size: 0.78rem; color: #b33; margin-top: 0.8rem; text-align: center; min-height: 1em;
+}
+
+/* ══════════════════════════════
+   MI CUENTA
+══════════════════════════════ */
+.account-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem; align-items: start; }
+.account-card {
+  background: white; border: 1px solid rgba(13,13,13,0.07);
+  padding: 1.8rem; box-shadow: var(--shadow);
+}
+.account-value { font-size: 0.95rem; margin-bottom: 1.2rem; }
+.logout-btn { background: var(--chrome); }
+.logout-btn:hover { background: #b33; }
+.orders-list { display: flex; flex-direction: column; gap: 0.8rem; }
+
+.order-card { border: 1px solid rgba(13,13,13,0.08); padding: 1.2rem; }
+.order-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 500; }
+.order-status { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.6rem; border-radius: 20px; background: var(--sand); color: var(--chrome); }
+.order-status-paid { background: var(--olive-light); color: var(--olive-dark); }
+.order-status-cancelled, .order-status-failed { background: #f3d9d9; color: #b33; }
+.order-date { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.6rem; }
+.order-item-line { font-size: 0.8rem; color: var(--chrome); margin-bottom: 0.2rem; }
+.order-total { font-size: 0.9rem; font-weight: 500; margin-top: 0.5rem; text-align: right; }
+
+@media (max-width: 768px) {
+  .account-grid { grid-template-columns: 1fr; }
+}
+
+/* ══════════════════════════════
    TOAST
 ══════════════════════════════ */
 .toast {
@@ -860,6 +965,8 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
   .checkout-form { padding: 1rem; }
   .checkout-title, .checkout-note { padding-left: 1rem; padding-right: 1rem; }
   .checkout-summary { padding: 0 1rem 1rem; }
+  .form-grid { grid-template-columns: 1fr; }
+  .payment-options { flex-direction: column; }
   .product-bottom { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
   .card-cart-btn { width: 100%; justify-content: center; }
   .size-table-head { align-items: flex-start; flex-direction: column; gap: 0.35rem; }

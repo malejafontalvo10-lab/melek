@@ -1,0 +1,8 @@
+# Local Netlify folder
+.netlify
+
+# Local Claude settings (may contain secrets/tokens)
+.claude/
+
+# Supabase local temp files (may contain connection strings)
+supabase/.temp/
