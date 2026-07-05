@@ -174,7 +174,8 @@ function renderProducts(list) {
         <span class="qa-label">Talla</span>
         <div class="qa-options" id="qa-sizes-${p.id}"></div>
         <button class="qa-confirm" id="qa-confirm-${p.id}">
-          ✓ Confirmar y agregar
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="13" height="13"><path d="M4 12l5 5L20 6"/></svg>
+          Confirmar y agregar
         </button>
       </div>` : ""}
     `;
@@ -503,7 +504,7 @@ function updateCartUI() {
       <span>Total</span>
       <strong>${formatPrice(orderTotal())}</strong>
     </div>
-    <p class="cart-note">${envio === 0 ? "✓ Envío gratis por compra desde " + formatPrice(SHIPPING_FREE_THRESHOLD) : "Envío de " + formatPrice(SHIPPING_COST) + " — gratis desde " + formatPrice(SHIPPING_FREE_THRESHOLD)}</p>
+    <p class="cart-note">${envio === 0 ? "Envío gratis por compra desde " + formatPrice(SHIPPING_FREE_THRESHOLD) : "Envío de " + formatPrice(SHIPPING_COST) + " — gratis desde " + formatPrice(SHIPPING_FREE_THRESHOLD)}</p>
     <button class="checkout-btn" id="checkoutBtn">Finalizar pedido</button>
   `;
 
@@ -679,28 +680,28 @@ async function sendOrder() {
     ).join("\n");
 
     const msg = `
-🛍️ *NUEVO PEDIDO — MELEK NAKIŞ*
-📦 Pedido #${order.id.slice(0, 8)}
+*NUEVO PEDIDO — MELEK NAKIŞ*
+Pedido #${order.id.slice(0, 8)}
 
 *PRODUCTOS:*
 ${items}
 
-💰 *Subtotal:* ${formatPrice(cartTotal())}
-🚚 *Envío:* ${envio === 0 ? "Gratis" : formatPrice(envio)}
-💳 *Total a pagar:* ${formatPrice(orderTotal())}
+*Subtotal:* ${formatPrice(cartTotal())}
+*Envío:* ${envio === 0 ? "Gratis" : formatPrice(envio)}
+*Total a pagar:* ${formatPrice(orderTotal())}
 
 ---
 *DATOS DE ENTREGA:*
-👤 Nombre: ${nombre}
-📱 Teléfono: ${telefono}
-🏙️ Ciudad: ${ciudad}, ${dpto}
-📍 Dirección: ${direccion}
+Nombre: ${nombre}
+Teléfono: ${telefono}
+Ciudad: ${ciudad}, ${dpto}
+Dirección: ${direccion}
 
-💳 *Método de pago:* ${pago}
-${notas ? `📝 Notas: ${notas}` : ""}
+*Método de pago:* ${pago}
+${notas ? `Notas: ${notas}` : ""}
 
 ---
-¡Hola! Quiero confirmar este pedido. 🌊
+¡Hola! Quiero confirmar este pedido.
     `.trim();
 
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
@@ -780,7 +781,7 @@ function initHeader() {
 // SOCIALS
 // ══════════════════════════════════════════
 function initSocials() {
-  const waMsg = `Hola MELEK NAKIŞ 🌊 ¡Me interesa saber más sobre sus productos!`;
+  const waMsg = `Hola MELEK NAKIŞ, ¡me interesa saber más sobre sus productos!`;
   const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsg)}`;
   document.getElementById("floatingWA").href = waUrl;
   document.getElementById("contact-wa").href = waUrl;
