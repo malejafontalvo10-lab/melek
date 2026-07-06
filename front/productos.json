@@ -49,10 +49,10 @@
         "Green": ["https://i.postimg.cc/x1CHg4sH/verde.jpg"]
       },
       "variantes": {
-        "Gold":  { "XS": true,  "S": true,  "M": true,  "L": false },
+        "Gold":  { "XS": true,  "S": true,  "M": true,  "L": true },
         "Black":    { "XS": true,  "S": true, "M": true,  "L": true  },
         "White":    { "XS": true, "S": true,  "M": true,  "L": true  },
-        "Green":    { "XS": true, "S": true,  "M": true,  "L": false  }
+        "Green":    { "XS": true, "S": true,  "M": true,  "L": true  }
       }
     },
     {
