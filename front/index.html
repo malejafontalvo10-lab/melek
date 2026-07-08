@@ -26,7 +26,7 @@
 <!-- ── SIDE NAV ── -->
 <nav id="sideNav" class="side-nav">
   <button id="closeNav" class="close-nav" aria-label="Cerrar menú">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="16" height="16"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
   </button>
   <div class="side-nav-logo">MELEK NAKIŞ</div>
   <ul class="side-nav-list">
@@ -37,7 +37,7 @@
 
     <li class="nav-has-sub">
       <button class="nav-category" id="navCatToggle">
-        Catálogo <span class="nav-arrow">›</span>
+        Catálogo <span class="nav-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M9 6l6 6-6 6"/></svg></span>
       </button>
       <ul class="nav-sub" id="sub-catalogo">
         <li><a href="/catalogo" class="nav-sub-link nav-link" data-page="catalogo" data-filter="todos">Ver todo</a></li>
@@ -77,10 +77,10 @@
   <button class="header-logo" data-page="inicio" aria-label="Ir al inicio">MELEK NAKIŞ</button>
   <div class="header-actions">
     <button id="userBtn" class="user-btn" data-page="login" aria-label="Cuenta">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><path d="M12 12a4 4 0 100-8 4 4 0 000 8z"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     </button>
     <button id="cartBtn" class="cart-btn" aria-label="Ver carrito">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
       <span id="cartCount" class="cart-count">0</span>
     </button>
   </div>
@@ -104,10 +104,12 @@
       <div class="hero-actions">
         <button class="hero-cta" data-page="catalogo" data-filter="todos">
           <span>Ver catálogo</span>
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M2 8h12M9 3l5 5-5 5"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
         </button>
       </div>
     </div>
+
+    <p class="hero-scroll-cue">Explorar</p>
 
   </section>
 </main>
@@ -144,15 +146,15 @@
         </div>
         <div class="about-pillars">
           <div class="pillar">
-            <span class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 20c3-1 5-3 6-6l7.2-7.2a2 2 0 10-3-3L7 10.9c-3 1-5 3-6 6z"/><circle cx="17" cy="7" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+            <span class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c3-1 5-3 6-6l7-7a1.8 1.8 0 0 0-2.5-2.5l-7 7c-3 1-5 3-6 6z"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg></span>
             <strong>100% artesanal</strong><p>Tejido a mano, punto por punto</p>
           </div>
           <div class="pillar">
-            <span class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><ellipse cx="12" cy="5.5" rx="6.5" ry="2.6"/><ellipse cx="12" cy="18.5" rx="6.5" ry="2.6"/><path d="M5.5 5.5v13M18.5 5.5v13"/><path d="M8 8.3c1.8 1 6.2 1 8 0M8 15.7c1.8-1 6.2-1 8 0"/></svg></span>
+            <span class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="6.2" ry="2.4"/><ellipse cx="12" cy="18.5" rx="6.2" ry="2.4"/><path d="M5.8 5.5v13M18.2 5.5v13"/><path d="M8.2 8.6c1.7.9 5.9.9 7.6 0M8.2 15.4c1.7-.9 5.9-.9 7.6 0"/></svg></span>
             <strong>Materiales premium</strong><p>Hilos importados seleccionados</p>
           </div>
           <div class="pillar">
-            <span class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z"/></svg></span>
+            <span class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l3.5 9L12 21l-3.5-9z"/></svg></span>
             <strong>Piezas únicas</strong><p>Ninguna es una copia a otra</p>
           </div>
         </div>
@@ -190,19 +192,19 @@
         <p class="info-lead">Todo lo importante antes de confirmar tu pedido: tiempos de preparación, transporte y formas de pago disponibles.</p>
         <div class="info-cards">
           <div class="info-card">
-            <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></div>
+            <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 7.3 12 12l-8.5-4.7"/><path d="M12 21.5V12"/><path d="M20.9 16.5V7.5a1.8 1.8 0 0 0-.9-1.6l-7-4a1.8 1.8 0 0 0-1.8 0l-7 4a1.8 1.8 0 0 0-.9 1.6v9a1.8 1.8 0 0 0 .9 1.6l7 4a1.8 1.8 0 0 0 1.8 0l7-4a1.8 1.8 0 0 0 .9-1.6Z"/></svg></div>
             <h3>Envíos nacionales</h3>
             <p class="info-days">3 días hábiles</p>
             <p>Tiempo de alistamiento y envío de guía desde nuestra parte. Tu pedido sale en máximo 3 días hábiles.</p>
           </div>
           <div class="info-card">
-            <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M20.5 12L12 20.5 3.5 12 12 3.5 20.5 12z"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg></div>
+            <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l3.5 9L12 21l-3.5-9z"/></svg></div>
             <h3>Envío gratis</h3>
             <p class="info-days">Aplican TyC</p>
             <p>Disfruta de envío gratuito a cualquier destino en Colombia por compras superiores a 200.000 COP.</p>
           </div>
           <div class="info-card">
-            <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 8h11v9H2z"/><path d="M13 11h4l4 3v3h-8z"/><circle cx="6.2" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg></div>
+            <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11v9H2z"/><path d="M13 11h4.3L21 14v3h-8z"/><circle cx="6.3" cy="19" r="1.7"/><circle cx="17.3" cy="19" r="1.7"/></svg></div>
             <h3>Transportadora</h3>
             <p class="info-days">Tiempo aparte</p>
             <p>Una vez despachado, el tiempo de la transportadora corre aparte. Envíos internacionales también disponibles.</p>
@@ -214,9 +216,9 @@
           <h3 class="payment-title">Métodos de pago</h3>
         </div>
         <div class="payment-methods">
-          <div class="payment-card"><div class="payment-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M9 15l6-6"/><path d="M13 5l1.5-1.5a3.5 3.5 0 015 5L18 10"/><path d="M11 19l-1.5 1.5a3.5 3.5 0 01-5-5L6 14"/></svg></div><strong>Paypal</strong><p>Link de pago seguro y a tu alcance</p></div>
-          <div class="payment-card"><div class="payment-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M14 9l2 2"/></svg></div><strong>Transferencia</strong><p>Pago con llave al instante desde cualquier banco</p></div>
-          <div class="payment-card"><div class="payment-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div><strong>Mercado pago, Tarjeta credito/debito</strong><p>Pagos seguros desde cualquier parte del mundo</p></div>
+          <div class="payment-card"><div class="payment-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 17H7.2a5 5 0 0 1 0-10h2.3"/><path d="M14.5 7h2.3a5 5 0 1 1 0 10h-2.3"/><path d="M8 12h8"/></svg></div><strong>Paypal</strong><p>Link de pago seguro y a tu alcance</p></div>
+          <div class="payment-card"><div class="payment-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V10M10 21V10M14 21V10M19 21V10"/><path d="M3 10l9-6 9 6z"/></svg></div><strong>Transferencia</strong><p>Pago con llave al instante desde cualquier banco</p></div>
+          <div class="payment-card"><div class="payment-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div><strong>Mercado pago, Tarjeta credito/debito</strong><p>Pagos seguros desde cualquier parte del mundo</p></div>
         </div>
       </div>
     </section>
@@ -284,12 +286,12 @@
         <p class="section-eyebrow">— Tu tranquilidad primero —</p>
         <h2 class="guarantee-title">Garantías y devoluciones</h2>
         <div class="guarantee-grid">
-          <div class="guarantee-item"><h4><span class="guarantee-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2.5l4 9.5-4 9.5-4-9.5z"/></svg></span>Garantía de calidad</h4><p>Garantizamos la calidad artesanal de cada pieza. Antes del envío, enviamos fotos y videos del producto para confirmar su estado. Si recibes un producto con defecto de fabricación, lo reemplazaremos sin costo dentro de los 5 días hábiles siguientes a la entrega. Para aplicar la garantía, es obligatorio enviar un video mostrando la apertura del paquete desde el inicio y evidenciar que el defecto estaba presente al momento de recibirlo. No se aceptan reclamaciones sin evidencia ni después del plazo establecido.</p></div>
-          <div class="guarantee-item"><h4><span class="guarantee-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2.5l4 9.5-4 9.5-4-9.5z"/></svg></span>Cambios de talla</h4><p>Aceptamos cambios de talla dentro de los 2 días hábiles de recibido el pedido, siempre que la prenda esté en perfecto estado, sin uso, con etiqueta y en su empaque original. El costo de envío del cambio corre por cuenta del cliente.<br><br><strong>No aplica a personalizados.</strong></p></div>
-          <div class="guarantee-item"><h4><span class="guarantee-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2.5l4 9.5-4 9.5-4-9.5z"/></svg></span>Política de devoluciones</h4><p>No aceptamos devoluciones por cambio de opinión en productos personalizados o hechos a medida, ya que son elaborados exclusivamente para ti. En productos en stock, se evalúa cada caso individualmente.</p></div>
-          <div class="guarantee-item"><h4><span class="guarantee-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2.5l4 9.5-4 9.5-4-9.5z"/></svg></span>Proceso de reclamación</h4><p>Para iniciar cualquier reclamación, escríbenos por WhatsApp o Instagram con fotos del producto dentro del plazo establecido. Respondemos en un máximo de 24 horas hábiles.</p></div>
-          <div class="guarantee-item"><h4><span class="guarantee-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2.5l4 9.5-4 9.5-4-9.5z"/></svg></span>Cuidado de tus prendas</h4><p>Recomendamos lavar a mano con agua fría y jabón suave. No exprimir, dejar secar a la sombra extendido. El uso incorrecto del producto exime a MELEK de responsabilidad por deterioro prematuro.</p></div>
-          <div class="guarantee-item"><h4><span class="guarantee-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2.5l4 9.5-4 9.5-4-9.5z"/></svg></span>Variaciones de color</h4><p>Los colores pueden variar levemente según la pantalla de cada dispositivo. Hacemos lo posible por fotografiar fielmente los colores reales, pero pequeñas diferencias no constituyen defecto ni motivo de cambio.</p></div>
+          <div class="guarantee-item"><h4><span class="guarantee-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l3.5 9L12 21l-3.5-9z"/></svg></span>Garantía de calidad</h4><p>Garantizamos la calidad artesanal de cada pieza. Antes del envío, enviamos fotos y videos del producto para confirmar su estado. Si recibes un producto con defecto de fabricación, lo reemplazaremos sin costo dentro de los 5 días hábiles siguientes a la entrega. Para aplicar la garantía, es obligatorio enviar un video mostrando la apertura del paquete desde el inicio y evidenciar que el defecto estaba presente al momento de recibirlo. No se aceptan reclamaciones sin evidencia ni después del plazo establecido.</p></div>
+          <div class="guarantee-item"><h4><span class="guarantee-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l3.5 9L12 21l-3.5-9z"/></svg></span>Cambios de talla</h4><p>Aceptamos cambios de talla dentro de los 2 días hábiles de recibido el pedido, siempre que la prenda esté en perfecto estado, sin uso, con etiqueta y en su empaque original. El costo de envío del cambio corre por cuenta del cliente.<br><br><strong>No aplica a personalizados.</strong></p></div>
+          <div class="guarantee-item"><h4><span class="guarantee-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l3.5 9L12 21l-3.5-9z"/></svg></span>Política de devoluciones</h4><p>No aceptamos devoluciones por cambio de opinión en productos personalizados o hechos a medida, ya que son elaborados exclusivamente para ti. En productos en stock, se evalúa cada caso individualmente.</p></div>
+          <div class="guarantee-item"><h4><span class="guarantee-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l3.5 9L12 21l-3.5-9z"/></svg></span>Proceso de reclamación</h4><p>Para iniciar cualquier reclamación, escríbenos por WhatsApp o Instagram con fotos del producto dentro del plazo establecido. Respondemos en un máximo de 24 horas hábiles.</p></div>
+          <div class="guarantee-item"><h4><span class="guarantee-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l3.5 9L12 21l-3.5-9z"/></svg></span>Cuidado de tus prendas</h4><p>Recomendamos lavar a mano con agua fría y jabón suave. No exprimir, dejar secar a la sombra extendido. El uso incorrecto del producto exime a MELEK de responsabilidad por deterioro prematuro.</p></div>
+          <div class="guarantee-item"><h4><span class="guarantee-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l3.5 9L12 21l-3.5-9z"/></svg></span>Variaciones de color</h4><p>Los colores pueden variar levemente según la pantalla de cada dispositivo. Hacemos lo posible por fotografiar fielmente los colores reales, pero pequeñas diferencias no constituyen defecto ni motivo de cambio.</p></div>
         </div>
       </div>
     </section>
@@ -362,7 +364,7 @@
   <div class="modal-backdrop" id="modalBackdrop"></div>
   <div class="modal-box">
     <button class="modal-close" id="modalClose">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="15" height="15"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="15" height="15"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
     </button>
     <div class="modal-content" id="modalContent"></div>
   </div>
@@ -371,7 +373,7 @@
 <!-- ── LIGHTBOX ZOOM DE IMAGEN ── -->
 <div id="imgLightbox" class="img-lightbox">
   <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar zoom">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="18" height="18"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
   </button>
   <div class="lightbox-stage" id="lightboxStage">
     <img id="lightboxImg" class="lightbox-img" alt="" draggable="false" />
@@ -384,7 +386,7 @@
   <div class="cart-header">
     <h3>Mi carrito</h3>
     <button id="closeCart" aria-label="Cerrar carrito">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="16" height="16"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
     </button>
   </div>
   <div id="cartItems" class="cart-items"></div>
@@ -396,7 +398,7 @@
   <div class="modal-backdrop" id="checkoutBackdrop"></div>
   <div class="modal-box checkout-box">
     <button class="modal-close" id="checkoutClose">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="15" height="15"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="15" height="15"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
     </button>
     <h2 class="checkout-title">Finalizar pedido</h2>
     <p class="checkout-note">El envío ($ 12.000, gratis desde $ 200.000) ya está sumado al total a pagar.</p>
@@ -415,7 +417,7 @@
       <div class="payment-options" id="paymentOptions">
         <button type="button" class="payment-option" data-value="Transferencia">
           <span class="payment-option-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><path d="M3 10l9-6 9 6"/><path d="M5 10v9M10 10v9M14 10v9M19 10v9"/><path d="M3 19h18"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><path d="M3 21h18"/><path d="M5 21V10M10 21V10M14 21V10M19 21V10"/><path d="M3 10l9-6 9 6z"/></svg>
           </span>
           <span class="payment-option-text">
             <strong>Transferencia</strong>
@@ -424,7 +426,7 @@
         </button>
         <button type="button" class="payment-option" data-value="Mercado Pago">
           <span class="payment-option-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><rect x="2" y="5" width="20" height="14" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
           </span>
           <span class="payment-option-text">
             <strong>Mercado Pago</strong>
@@ -438,7 +440,7 @@
 
       <button type="button" id="sendWhatsApp" class="checkout-submit-btn" disabled>
         <svg id="sendWhatsAppIcon" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-        <svg id="sendMPIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="20" height="20" style="display:none"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        <svg id="sendMPIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="19" height="19" style="display:none"><rect x="2" y="5" width="20" height="14" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         <span id="sendWhatsAppLabel">Selecciona un método de pago</span>
       </button>
     </form>

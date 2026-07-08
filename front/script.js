@@ -330,10 +330,10 @@ function renderProducts(list) {
       <div class="product-bottom">
         <span class="product-price">${formatPrice(p.precio)}</span>
         <button class="card-cart-btn ${cartDisabled}" data-action="quick-add" data-id="${p.id}" aria-label="Agregar al carrito">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14">
-            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <path d="M16 10a4 4 0 01-8 0"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+            <path d="M3 6h18"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
           </svg>
           ${p.stock ? "Agregar" : "Sin stock"}
         </button>
@@ -349,7 +349,7 @@ function renderProducts(list) {
         <span class="qa-label">Talla</span>
         <div class="qa-options" id="qa-sizes-${p.id}"></div>
         <button class="qa-confirm" id="qa-confirm-${p.id}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="13" height="13"><path d="M4 12l5 5L20 6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 6 9 17l-5-5"/></svg>
           Confirmar y agregar
         </button>
       </div>` : ""}
