@@ -479,6 +479,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
 }
 .pillar:hover { border-color: var(--olive); }
 .pillar-icon { display: block; font-size: 1rem; color: var(--olive); margin-bottom: 0.5rem; }
+.pillar-icon svg { width: 1.8em; height: 1.8em; }
 .pillar strong { display: block; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.3rem; }
 .pillar p { font-size: 0.75rem; color: var(--text-muted); margin: 0; }
 .about-img-frame { aspect-ratio: 3/4; overflow: hidden; position: relative; }
@@ -526,6 +527,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
 .size-table-card:hover::before { transform: scaleX(1); }
 
 .info-icon { font-size: 2rem; margin-bottom: 1rem; }
+.info-icon svg { width: 1em; height: 1em; }
 .info-card h3 { font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
 .info-days { font-family: 'Fraunces', serif; font-size: 1.35rem; color: var(--olive); margin-bottom: 0.7rem; }
 .info-card p { font-size: 0.82rem; color: var(--chrome); line-height: 1.7; }
@@ -539,6 +541,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
   transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.3s;
 }
 .payment-logo { font-size: 2rem; margin-bottom: 1rem; }
+.payment-logo svg { width: 1em; height: 1em; }
 .payment-card strong { display: block; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.4rem; }
 .payment-card p { font-size: 0.78rem; color: var(--text-muted); }
 
@@ -579,8 +582,10 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
   background: white; padding: 1.8rem; border: 1px solid rgba(13,13,13,0.07);
   transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.3s;
 }
-.guarantee-item h4 { font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.8rem; color: var(--olive-dark); }
+.guarantee-item h4 { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.8rem; color: var(--olive-dark); }
 .guarantee-item p { font-size: 0.82rem; color: var(--chrome); line-height: 1.8; }
+.guarantee-mark { display: inline-flex; flex-shrink: 0; }
+.guarantee-mark svg { width: 1em; height: 1em; }
 
 /* ══════════════════════════════
    CONTACTO
