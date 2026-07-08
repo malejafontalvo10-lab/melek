@@ -36,6 +36,25 @@ function getProductImage(product, color = "") {
   return getProductImages(product, color)[0] || "";
 }
 
+// Devuelve una versión comprimida/redimensionada de la imagen (miniaturas rápidas).
+// La imagen original en alta calidad se sigue usando al abrir el producto y en el zoom.
+function thumbUrl(url, width, quality = 70) {
+  if (!url || !/^https?:\/\//i.test(url)) return url;
+  const clean = url.replace(/^https?:\/\//i, "");
+  return `https://images.weserv.nl/?url=${encodeURIComponent(clean)}&w=${width}&q=${quality}&output=webp`;
+}
+
+// Si la miniatura comprimida falla (servicio externo caído/bloqueado),
+// recupera automáticamente la imagen original para no dejar huecos rotos.
+function initImageFallback() {
+  document.addEventListener("error", (e) => {
+    const el = e.target;
+    if (el.tagName === "IMG" && el.dataset.fallback && el.src !== el.dataset.fallback) {
+      el.src = el.dataset.fallback;
+    }
+  }, true);
+}
+
 // ── INICIALIZACIÓN ─────────────────────────
 document.addEventListener("DOMContentLoaded", async () => {
   cart = loadCartLocal();
@@ -44,6 +63,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   initSocials();
   initCart();
   initModal();
+  initImageLightbox();
+  initImageFallback();
   initCheckout();
   updateCartUI();
   await loadProducts();
@@ -300,7 +321,7 @@ function renderProducts(list) {
 
     card.innerHTML = `
       <div class="product-img-wrap">
-        <img class="product-img" src="${getProductImage(p)}" alt="${p.nombre}" loading="lazy" />
+        <img class="product-img" src="${thumbUrl(getProductImage(p), 480)}" data-fallback="${getProductImage(p)}" alt="${p.nombre}" loading="lazy" decoding="async" />
       </div>
       <div class="product-info">
         <p class="product-cat">${p.categoria}</p>
@@ -389,7 +410,10 @@ function initQuickAdd(product, card) {
 
       const productImg = card.querySelector(".product-img");
       const colorImage = getProductImage(product, selColor);
-      if (productImg && colorImage) productImg.src = colorImage;
+      if (productImg && colorImage) {
+        productImg.dataset.fallback = colorImage;
+        productImg.src = thumbUrl(colorImage, 480);
+      }
 
       // Renderizar tallas con disponibilidad
       const sizes = product.variantes[selColor];
@@ -450,7 +474,7 @@ function openModal(product) {
       <img class="modal-main-img" id="mainImg" src="${getProductImage(product)}" alt="${product.nombre}" />
       <div class="modal-thumbs" id="thumbs">
         ${initialImages.map((f, i) => `
-          <img class="modal-thumb ${i === 0 ? "active" : ""}" src="${f}" alt="Foto ${i+1}" data-src="${f}" loading="lazy" />
+          <img class="modal-thumb ${i === 0 ? "active" : ""}" src="${thumbUrl(f, 140)}" data-fallback="${f}" alt="Foto ${i+1}" data-src="${f}" loading="lazy" decoding="async" />
         `).join("")}
       </div>
     </div>
@@ -477,6 +501,7 @@ function openModal(product) {
   `;
 
   initModalThumbs(content);
+  initModalZoom(content, product);
 
   // Color → actualizar tallas con disponibilidad
   const colorOpts = content.querySelector("#modalColorOpts");
@@ -542,6 +567,15 @@ function initModalThumbs(content) {
   });
 }
 
+// Click en la imagen grande → abrir el visor con zoom, en máxima calidad
+function initModalZoom(content, product) {
+  const mainImg = content.querySelector("#mainImg");
+  if (!mainImg) return;
+  mainImg.addEventListener("click", () => {
+    window.openLightbox(mainImg.src, product.nombre);
+  });
+}
+
 function updateModalImages(product, color, content) {
   const images = getProductImages(product, color);
   const mainImg = content.querySelector("#mainImg");
@@ -550,7 +584,7 @@ function updateModalImages(product, color, content) {
 
   mainImg.src = images[0];
   thumbs.innerHTML = images.map((f, i) => `
-    <img class="modal-thumb ${i === 0 ? "active" : ""}" src="${f}" alt="Foto ${i+1}" data-src="${f}" loading="lazy" />
+    <img class="modal-thumb ${i === 0 ? "active" : ""}" src="${thumbUrl(f, 140)}" alt="Foto ${i+1}" data-src="${f}" loading="lazy" decoding="async" />
   `).join("");
   initModalThumbs(content);
 }
@@ -558,6 +592,140 @@ function updateModalImages(product, color, content) {
 function closeModal(id) {
   document.getElementById(id).classList.remove("open");
   document.body.style.overflow = "";
+}
+
+// ══════════════════════════════════════════
+// LIGHTBOX — ZOOM DE IMAGEN (rueda, pellizco, arrastrar, doble click/tap)
+// ══════════════════════════════════════════
+function initImageLightbox() {
+  const lightbox = document.getElementById("imgLightbox");
+  const stage    = document.getElementById("lightboxStage");
+  const img      = document.getElementById("lightboxImg");
+  const closeBtn = document.getElementById("lightboxClose");
+  if (!lightbox || !stage || !img || !closeBtn) return;
+
+  let scale = 1, originX = 0, originY = 0;
+  let isPanning = false, startX = 0, startY = 0;
+  let pinchStartDist = 0, pinchStartScale = 1;
+  let lastTapTime = 0;
+
+  const clampScale = (s) => Math.min(Math.max(s, 1), 4);
+
+  function applyTransform() {
+    img.style.transform = `translate(${originX}px, ${originY}px) scale(${scale})`;
+  }
+
+  function resetZoom() {
+    scale = 1; originX = 0; originY = 0;
+    img.classList.remove("zoomed");
+    applyTransform();
+  }
+
+  window.openLightbox = function (src, alt) {
+    img.src = src;
+    img.alt = alt || "";
+    resetZoom();
+    lightbox.classList.add("open");
+    document.body.style.overflow = "hidden";
+  };
+
+  function closeLightbox() {
+    lightbox.classList.remove("open");
+    document.body.style.overflow = "";
+    resetZoom();
+  }
+
+  closeBtn.addEventListener("click", closeLightbox);
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && lightbox.classList.contains("open")) closeLightbox();
+  });
+
+  function toggleZoom(clientX, clientY) {
+    if (scale > 1) {
+      resetZoom();
+      return;
+    }
+    const rect = stage.getBoundingClientRect();
+    originX = (rect.width / 2 - (clientX - rect.left)) * 0.6;
+    originY = (rect.height / 2 - (clientY - rect.top)) * 0.6;
+    scale = 2.5;
+    img.classList.add("zoomed");
+    applyTransform();
+  }
+
+  // Rueda del mouse → acercar / alejar
+  stage.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    scale = clampScale(scale + (e.deltaY < 0 ? 0.25 : -0.25));
+    img.classList.toggle("zoomed", scale > 1);
+    if (scale === 1) { originX = 0; originY = 0; }
+    applyTransform();
+  }, { passive: false });
+
+  // Doble click → alternar zoom (desktop)
+  stage.addEventListener("dblclick", (e) => toggleZoom(e.clientX, e.clientY));
+
+  // Arrastrar con mouse cuando hay zoom
+  stage.addEventListener("mousedown", (e) => {
+    if (scale <= 1) return;
+    isPanning = true;
+    startX = e.clientX - originX;
+    startY = e.clientY - originY;
+    stage.classList.add("dragging");
+  });
+  window.addEventListener("mousemove", (e) => {
+    if (!isPanning) return;
+    originX = e.clientX - startX;
+    originY = e.clientY - startY;
+    applyTransform();
+  });
+  window.addEventListener("mouseup", () => {
+    isPanning = false;
+    stage.classList.remove("dragging");
+  });
+
+  // Táctil: pellizcar para zoom, arrastrar, doble tap
+  const touchDist = (t) => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+
+  stage.addEventListener("touchstart", (e) => {
+    if (e.touches.length === 2) {
+      pinchStartDist = touchDist(e.touches);
+      pinchStartScale = scale;
+    } else if (e.touches.length === 1) {
+      const now = Date.now();
+      if (now - lastTapTime < 300) toggleZoom(e.touches[0].clientX, e.touches[0].clientY);
+      lastTapTime = now;
+      if (scale > 1) {
+        isPanning = true;
+        startX = e.touches[0].clientX - originX;
+        startY = e.touches[0].clientY - originY;
+      }
+    }
+  }, { passive: true });
+
+  stage.addEventListener("touchmove", (e) => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      scale = clampScale(pinchStartScale * (touchDist(e.touches) / pinchStartDist));
+      img.classList.toggle("zoomed", scale > 1);
+      applyTransform();
+    } else if (e.touches.length === 1 && isPanning && scale > 1) {
+      e.preventDefault();
+      originX = e.touches[0].clientX - startX;
+      originY = e.touches[0].clientY - startY;
+      applyTransform();
+    }
+  }, { passive: false });
+
+  stage.addEventListener("touchend", (e) => {
+    if (e.touches.length === 0) {
+      isPanning = false;
+      if (scale <= 1) resetZoom();
+    }
+  });
 }
 
 // ══════════════════════════════════════════
@@ -634,7 +802,7 @@ function updateCartUI() {
 
   itemsEl.innerHTML = cart.map(item => `
     <div class="cart-item">
-      <img class="cart-item-img" src="${getProductImage(item, item.color)}" alt="${item.nombre}" />
+      <img class="cart-item-img" src="${thumbUrl(getProductImage(item, item.color), 140)}" data-fallback="${getProductImage(item, item.color)}" alt="${item.nombre}" loading="lazy" decoding="async" />
       <div>
         <p class="cart-item-name">${item.nombre}</p>
         <p class="cart-item-details">Color: ${item.color}<br>Talla: ${item.size}<br>Cant: ${item.qty}</p>
