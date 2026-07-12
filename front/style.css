@@ -8,7 +8,7 @@
    --olive-light:#C5CFBE
    --sand:       #E8E0D4
    --text-muted: #8a8480
-   Fuentes: Cormorant Garamond (títulos) + Montserrat (texto) — únicamente
+   Fuentes: Playfair Display (títulos) + Montserrat (texto) — únicamente
 ============================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap');
@@ -131,7 +131,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
 .close-nav:hover { opacity: 1; transform: rotate(90deg); background: rgba(245,242,237,0.16); }
 
 .side-nav-logo {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 1.8rem; font-weight: 300; letter-spacing: 0.3em;
   color: var(--cream); margin-bottom: 2.8rem;
   padding-bottom: 1.6rem; border-bottom: 1px solid rgba(245,242,237,0.12);
@@ -218,7 +218,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
 .menu-btn.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
 .header-logo {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 1.25rem; font-weight: 300; letter-spacing: 0.32em;
   position: absolute; left: 50%; transform: translateX(-50%);
   color: var(--black); white-space: nowrap;
@@ -316,9 +316,9 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
 }
 
 .hero-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Playfair Display', serif;
   font-size: clamp(2.8rem, 7vw, 5.2rem);
-  font-weight: 400; font-style: italic;
+  font-weight: 400;
   line-height: 1.08;
   letter-spacing: -0.01em;
   color: var(--black);
@@ -393,8 +393,9 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
 ══════════════════════════════ */
 .section-header { text-align: center; margin-bottom: 3rem; }
 .section-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.1rem, 5vw, 3.2rem); font-weight: 300; letter-spacing: 0.05em; font-style: italic;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.1rem, 5vw, 3.2rem); font-weight: 300; letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 .section-sub {
   font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
@@ -472,7 +473,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
   font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--text-muted); margin-bottom: 0.4rem;
 }
-.product-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; font-weight: 400; margin-bottom: 0.7rem; }
+.product-name { font-family: 'Playfair Display', serif; font-style: normal; text-transform: uppercase; font-size: 1.2rem; font-weight: 400; margin-bottom: 0.7rem; }
 
 .product-bottom {
   display: flex; align-items: center; justify-content: space-between;
@@ -539,11 +540,13 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
 ══════════════════════════════ */
 .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-bottom: var(--space-xl); }
 .about-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Playfair Display', serif;
   font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 300; line-height: 1.15; margin-bottom: 1.7rem;
+  text-transform: uppercase;
 }
-.about-title em { font-style: italic; color: var(--olive); }
+.about-title em { font-style: normal; color: var(--olive); }
 .about-text p { color: var(--chrome); line-height: 1.9; margin-bottom: 1.1rem; font-size: 0.92rem; }
+.about-text em { font-style: normal; font-weight: 600; }
 .about-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2.4rem; }
 .pillar {
   text-align: center; padding: 1.6rem 1rem;
@@ -566,7 +569,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
    ENVÍOS + PAGOS
 ══════════════════════════════ */
 .info-inner { max-width: 960px; margin: 0 auto; text-align: center; }
-.info-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.1rem, 4vw, 2.9rem); font-weight: 300; margin-bottom: 2.6rem; }
+.info-title { font-family: 'Playfair Display', serif; font-size: clamp(2.1rem, 4vw, 2.9rem); font-weight: 300; margin-bottom: 2.6rem; text-transform: uppercase; }
 .info-lead { max-width: 660px; margin: -1.2rem auto 2.6rem; color: var(--chrome); font-size: 0.92rem; line-height: 1.9; }
 .info-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; margin-bottom: 2.4rem; }
 
@@ -611,12 +614,12 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
 }
 .info-icon svg { width: 22px; height: 22px; }
 .info-card h3 { font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
-.info-days { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--olive); margin-bottom: 0.7rem; font-style: italic; }
+.info-days { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--olive); margin-bottom: 0.7rem; font-style: normal; }
 .info-card p { font-size: 0.82rem; color: var(--chrome); line-height: 1.7; }
 .info-note { font-size: 0.8rem; color: var(--text-muted); padding: 1.1rem 1.2rem; background: var(--sand); border-left: 3px solid var(--olive); border-radius: var(--radius-sm); text-align: left; }
 
 .payment-block { margin-top: var(--space-lg); }
-.payment-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.7rem, 3vw, 2.3rem); font-weight: 300; margin-bottom: 2.2rem; }
+.payment-title { font-family: 'Playfair Display', serif; font-size: clamp(1.7rem, 3vw, 2.3rem); font-weight: 300; margin-bottom: 2.2rem; text-transform: uppercase; }
 .payment-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
 .payment-card {
   background: white; padding: 2.2rem 1.2rem; border: 1px solid rgba(13,13,13,0.07);
@@ -636,7 +639,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
    GUÍA DE TALLAS
 ══════════════════════════════ */
 .size-guide-inner { max-width: 980px; margin: 0 auto; }
-.size-guide-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.1rem, 4vw, 3.1rem); font-weight: 300; margin-bottom: 1.1rem; }
+.size-guide-title { font-family: 'Playfair Display', serif; font-size: clamp(2.1rem, 4vw, 3.1rem); font-weight: 300; margin-bottom: 1.1rem; text-transform: uppercase; }
 .size-guide-sub { max-width: 680px; color: var(--chrome); line-height: 1.9; font-size: 0.92rem; margin-bottom: 2.4rem; }
 .size-table-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem; align-items: start; }
 
@@ -649,7 +652,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
   display: flex; justify-content: space-between; gap: 1rem; align-items: baseline;
   padding: 1.3rem 1.4rem 0.9rem; border-bottom: 1px solid rgba(13,13,13,0.07);
 }
-.size-table-head span { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-style: italic; font-size: 1.3rem; }
+.size-table-head span { font-family: 'Playfair Display', serif; font-weight: 400; font-style: normal; text-transform: uppercase; font-size: 1.3rem; }
 .size-table-head small { color: var(--text-muted); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
 .table-scroll { overflow-x: auto; }
 .size-table { width: 100%; border-collapse: collapse; min-width: 430px; }
@@ -664,7 +667,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
    GARANTÍAS
 ══════════════════════════════ */
 .guarantee-inner { max-width: 900px; margin: 0 auto; }
-.guarantee-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.1rem, 4vw, 2.9rem); font-weight: 300; margin-bottom: 2.6rem; }
+.guarantee-title { font-family: 'Playfair Display', serif; font-size: clamp(2.1rem, 4vw, 2.9rem); font-weight: 300; margin-bottom: 2.6rem; text-transform: uppercase; }
 .guarantee-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
 .guarantee-item {
   background: white; padding: 2rem; border: 1px solid rgba(13,13,13,0.07);
@@ -683,7 +686,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
    CONTACTO
 ══════════════════════════════ */
 .contact-inner { max-width: 640px; margin: 0 auto; text-align: center; }
-.contact-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.1rem, 4vw, 3.1rem); font-weight: 300; margin-bottom: 1.1rem; }
+.contact-title { font-family: 'Playfair Display', serif; font-size: clamp(2.1rem, 4vw, 3.1rem); font-weight: 300; margin-bottom: 1.1rem; }
 .contact-sub { font-size: 0.9rem; color: var(--chrome); margin-bottom: 2.8rem; }
 .contact-channels { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
 .contact-channel {
@@ -711,7 +714,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
   width: min(320px, 70%); height: 1px;
   background: linear-gradient(90deg, transparent, rgba(245,242,237,0.25), transparent);
 }
-.footer-logo { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.9rem; font-weight: 300; letter-spacing: 0.28em; margin-bottom: 0.7rem; }
+.footer-logo { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 300; letter-spacing: 0.28em; margin-bottom: 0.7rem; }
 .footer-tagline { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(245,242,237,0.45); margin-bottom: 0.9rem; }
 .footer-copy { font-size: 0.72rem; color: rgba(245,242,237,0.25); }
 
@@ -757,7 +760,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
 
 .modal-details { padding: 2.2rem 2rem; overflow-y: auto; }
 .modal-cat { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; }
-.modal-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.75rem; font-weight: 400; margin-bottom: 0.8rem; }
+.modal-name { font-family: 'Playfair Display', serif; font-style: normal; text-transform: uppercase; font-size: 1.75rem; font-weight: 400; margin-bottom: 0.8rem; }
 .modal-price { font-size: 1.4rem; font-weight: 600; margin-bottom: 1.1rem; }
 .modal-desc { font-size: 0.86rem; line-height: 1.8; color: var(--chrome); margin-bottom: 1.6rem; padding-bottom: 1.6rem; border-bottom: 1px solid rgba(13,13,13,0.1); }
 
@@ -838,7 +841,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
 .cart-panel.open { transform: translateX(0); }
 
 .cart-header { display: flex; justify-content: space-between; align-items: center; padding: 1.6rem 1.7rem; border-bottom: 1px solid rgba(13,13,13,0.09); }
-.cart-header h3 { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.4rem; font-weight: 400; }
+.cart-header h3 { font-family: 'Playfair Display', serif; font-style: normal; text-transform: uppercase; font-size: 1.4rem; font-weight: 400; }
 .cart-header button {
   color: var(--text-muted); transition: color var(--trans-fast), transform var(--trans-fast), background var(--trans-fast);
   width: 34px; height: 34px; border-radius: var(--radius-pill);
@@ -858,7 +861,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
   to   { opacity: 1; transform: translateX(0); }
 }
 .cart-item-img { width: 70px; height: 88px; object-fit: cover; border-radius: var(--radius-sm); }
-.cart-item-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; font-weight: 400; margin-bottom: 0.35rem; }
+.cart-item-name { font-family: 'Playfair Display', serif; font-style: normal; font-size: 1.05rem; font-weight: 400; margin-bottom: 0.35rem; }
 .cart-item-details { font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; }
 .cart-item-price { font-size: 0.85rem; font-weight: 600; white-space: nowrap; }
 .cart-remove { display: block; font-size: 0.7rem; color: var(--text-muted); text-decoration: underline; cursor: pointer; margin-top: 0.3rem; background: none; border: none; font-family: inherit; transition: color var(--trans-fast); }
@@ -868,7 +871,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
 .cart-footer { padding: 1.6rem 1.7rem; border-top: 1px solid rgba(13,13,13,0.09); }
 .cart-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.1rem; }
 .cart-total span { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
-.cart-total strong { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.4rem; font-weight: 400; }
+.cart-total strong { font-family: 'Playfair Display', serif; font-style: normal; font-size: 1.4rem; font-weight: 400; }
 .cart-note { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 1.1rem; padding: 0.7rem; background: var(--sand); border-radius: var(--radius-sm); text-align: center; }
 .checkout-btn {
   width: 100%; padding: 1.05rem;
@@ -885,7 +888,7 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
    CHECKOUT MODAL
 ══════════════════════════════ */
 .checkout-box { padding: 0; max-width: 520px; border-radius: var(--radius-xl); }
-.checkout-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.9rem; font-weight: 400; padding: 2.2rem 2.2rem 0; letter-spacing: 0.02em; }
+.checkout-title { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 400; padding: 2.2rem 2.2rem 0; letter-spacing: 0.02em; }
 .checkout-note { font-size: 0.78rem; color: var(--text-muted); padding: 0.9rem 1.2rem; border-left: 3px solid var(--olive); border-radius: var(--radius-sm); margin: 1.1rem 2.2rem; background: var(--sand); }
 .checkout-summary { padding: 0 2.2rem 1.6rem; border-bottom: 1px solid rgba(13,13,13,0.1); max-height: 200px; overflow-y: auto; }
 .checkout-summary-item { display: flex; justify-content: space-between; font-size: 0.82rem; padding: 0.4rem 0; border-bottom: 1px solid rgba(13,13,13,0.05); }
@@ -959,6 +962,66 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
   box-shadow: var(--shadow-btn);
 }
 .checkout-submit-btn.pay-mercadopago:hover { background: var(--sand); box-shadow: var(--shadow-btn-hover); }
+
+/* ══════════════════════════════
+   COMBOBOX — país / departamento / ciudad / teléfono
+══════════════════════════════ */
+.combobox-wrapper { position: relative; }
+.combobox-wrapper .is-hidden { display: none !important; }
+.is-hidden { display: none !important; }
+
+.combobox-input[disabled] { cursor: not-allowed; opacity: 0.6; background: var(--cream); }
+
+.combobox-panel {
+  position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 20;
+  background: var(--white); border: 1px solid rgba(13,13,13,0.12);
+  border-radius: var(--radius-md); box-shadow: var(--shadow-card-hover);
+  max-height: 260px; overflow-y: auto; padding: 0.4rem;
+  list-style: none;
+}
+.combobox-option {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.6rem 0.7rem; border-radius: var(--radius-sm);
+  cursor: pointer; font-size: 0.85rem;
+  transition: background var(--trans-fast);
+}
+.combobox-option:hover, .combobox-option--active { background: var(--sand); }
+.combobox-option-label { flex: 1; }
+.combobox-option-sublabel { margin-left: auto; font-size: 0.72rem; color: var(--text-muted); }
+.combobox-empty { padding: 0.8rem; font-size: 0.8rem; color: var(--text-muted); text-align: center; }
+.combobox-flag { width: 20px; height: 14px; border-radius: 3px; flex-shrink: 0; box-shadow: 0 0 0 1px rgba(13,13,13,0.08); }
+
+/* Skeleton loader — shimmer mientras cargan departamentos/ciudades */
+.combobox-skeleton-row {
+  height: 34px; border-radius: var(--radius-sm); margin-bottom: 0.3rem;
+  background: linear-gradient(90deg, var(--sand) 25%, var(--sand-warm) 37%, var(--sand) 63%);
+  background-size: 400% 100%;
+  animation: skeletonShimmer 1.4s ease-in-out infinite;
+}
+.combobox-skeleton-row:last-child { margin-bottom: 0; }
+@keyframes skeletonShimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+/* Validación en tiempo real — sin alert(), error inline bajo el campo */
+.field-error { display: block; font-size: 0.72rem; color: #b33; margin-top: 0.4rem; min-height: 1em; letter-spacing: 0.01em; }
+.form-row.is-invalid input,
+.form-row.is-invalid .combobox-input {
+  border-color: #b33 !important;
+  box-shadow: 0 0 0 4px rgba(179,51,51,0.1) !important;
+}
+
+/* Teléfono internacional — bandera + código junto al número, estilo WhatsApp */
+.phone-input-group { display: flex; gap: 0.6rem; }
+.phone-input-group .combobox-wrapper { flex: 0 0 128px; }
+.phone-input-group input[type="tel"] { flex: 1; }
+.phone-country-input { padding-left: 2.3rem !important; cursor: pointer; }
+.phone-flag-indicator {
+  position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%);
+  width: 20px; height: 14px; border-radius: 3px; z-index: 1;
+  box-shadow: 0 0 0 1px rgba(13,13,13,0.08); background: var(--sand);
+}
 
 /* ══════════════════════════════
    FLOATING WHATSAPP — LUXURY
@@ -1150,6 +1213,8 @@ input, select, textarea { font-family: 'Montserrat', sans-serif; font-size: 0.9r
   .form-grid { grid-template-columns: 1fr; }
   .payment-options { flex-direction: column; }
   .size-table-head { align-items: flex-start; flex-direction: column; gap: 0.35rem; }
+  .phone-input-group { flex-direction: column; }
+  .phone-input-group .combobox-wrapper { flex: 1 1 auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {

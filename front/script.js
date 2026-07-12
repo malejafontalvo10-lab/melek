@@ -856,6 +856,7 @@ function initCheckout() {
   document.getElementById("checkoutClose").addEventListener("click", () => closeModal("checkoutModal"));
   document.getElementById("checkoutBackdrop").addEventListener("click", () => closeModal("checkoutModal"));
   document.getElementById("sendWhatsApp").addEventListener("click", sendOrder);
+  Checkout.Form.init();
 
   document.querySelectorAll(".payment-option").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -900,7 +901,7 @@ function updateCheckoutSubmitButton() {
   }
 }
 
-function openCheckout() {
+async function openCheckout() {
   if (!currentUser) {
     closeCart();
     showToast("Inicia sesión para finalizar tu pedido");
@@ -925,26 +926,39 @@ function openCheckout() {
     </div>
   `;
   resetPaymentSelection();
+  Checkout.Form.resetAll();
   document.getElementById("checkoutModal").classList.add("open");
   document.body.style.overflow = "hidden";
+  await Checkout.Form.prefillFromProfile(currentUser.id);
 }
 
 async function sendOrder() {
   if (!currentUser) { showToast("Inicia sesión para finalizar tu pedido"); return; }
 
-  const nombre   = document.getElementById("cf-nombre").value.trim();
-  const telefono = document.getElementById("cf-telefono").value.trim();
-  const ciudad   = document.getElementById("cf-ciudad").value.trim();
-  const dpto     = document.getElementById("cf-dpto").value.trim();
-  const direccion= document.getElementById("cf-direccion").value.trim();
-  const pago     = document.getElementById("cf-pago").value;
-  const notas    = document.getElementById("cf-notas").value.trim();
+  const nombre    = document.getElementById("cf-nombre").value.trim();
+  const direccion = document.getElementById("cf-direccion").value.trim();
+  const pago      = document.getElementById("cf-pago").value;
+  const notas     = document.getElementById("cf-notas").value.trim();
 
-  if (!nombre || !telefono || !ciudad || !dpto || !direccion || !pago) {
-    showToast("Por favor completa todos los campos obligatorios (*)");
-    return;
-  }
+  const geo   = Checkout.Form.getSelectedGeo();
+  const phone = Checkout.Form.getPhonePayload();
+
+  const valid = Checkout.Validation.validateAll({
+    nombre,
+    telefono: phone.phoneNumber,
+    pais: geo.country?.iso2 || "",
+    departamento: geo.department?.name || "",
+    ciudad: geo.city?.name || "",
+    direccion,
+    codigoPostal: geo.postalCode
+  });
+  if (!valid) return;
+  if (!pago) { showToast("Selecciona un método de pago"); return; }
   if (cart.length === 0) { showToast("Tu carrito está vacío"); return; }
+
+  const ciudad = geo.city.name;
+  const dpto   = geo.department.name;
+  const telefono = phone.phoneDisplay;
 
   const submitBtn = document.getElementById("sendWhatsApp");
   submitBtn.disabled = true;
@@ -962,10 +976,31 @@ async function sendOrder() {
       departamento: dpto,
       direccion,
       metodo_pago: pago,
-      notas: notas || null
+      notas: notas || null,
+      pais: geo.country.name,
+      pais_iso2: geo.country.iso2,
+      codigo_postal: geo.postalCode || null,
+      phone_dial_code: phone.phoneDialCode,
+      phone_country_iso2: phone.phoneCountryIso2
     }).select("id").single();
 
     if (error) throw error;
+
+    try {
+      await supabase.from("profiles").update({
+        telefono,
+        phone_dial_code: phone.phoneDialCode,
+        phone_country_iso2: phone.phoneCountryIso2,
+        pais: geo.country.name,
+        pais_iso2: geo.country.iso2,
+        departamento: dpto,
+        ciudad,
+        direccion,
+        codigo_postal: geo.postalCode || null
+      }).eq("id", currentUser.id);
+    } catch (profileErr) {
+      // No crítico: la orden ya se guardó, el autofill solo se degradará la próxima vez.
+    }
 
     const itemRows = await Promise.all(cart.map(async i => ({
       order_id: order.id,
@@ -1016,8 +1051,9 @@ ${items}
 *DATOS DE ENTREGA:*
 Nombre: ${nombre}
 Teléfono: ${telefono}
+País: ${geo.country.name}
 Ciudad: ${ciudad}, ${dpto}
-Dirección: ${direccion}
+Dirección: ${direccion}${geo.postalCode ? `\nCódigo postal: ${geo.postalCode}` : ""}
 
 *Método de pago:* ${pago}
 ${notas ? `Notas: ${notas}` : ""}
